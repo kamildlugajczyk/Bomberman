@@ -123,13 +123,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="block.cpp" />
+    <ClCompile Include="bomb.cpp" />
+    <ClCompile Include="breakable_wall.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="graphic_object.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="power_up.cpp" />
+    <ClCompile Include="solid_wall.cpp" />
+    <ClCompile Include="wall.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="block.hpp" />
+    <ClInclude Include="bomb.hpp" />
+    <ClInclude Include="breakable_wall.hpp" />
     <ClInclude Include="game.hpp" />
     <ClInclude Include="graphic_object.hpp" />
+    <ClInclude Include="player.hpp" />
+    <ClInclude Include="power_up.hpp" />
+    <ClInclude Include="solid_wall.hpp" />
+    <ClInclude Include="wall.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
