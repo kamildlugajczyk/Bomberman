@@ -1,6 +1,8 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
+
 #include "game.hpp"
+#include "player.hpp"
 
 Game::Game()
 {
@@ -10,11 +12,32 @@ Game::Game()
 
 	window.setFramerateLimit(60);
 
+	player.SetPosition(sf::Vector2f( 200, 200));
+
 	isOver = false;
+}
+
+void Game::Draw()
+{
+	player.Draw(window);
 }
 
 void Game::play()
 {
+	sf::Clock clock;
+	sf::Time time;
+
+	// tymczasowe
+	sf::Texture texture;
+	if (!texture.loadFromFile("res/img/bomberman.png"))
+	{
+		std::cout << "Load failed! " << std::endl;
+		getchar();
+	}
+	//--------------------------
+
+	player.LoadTexture(texture);
+
 	while (window.isOpen())
 	{
 		sf::Event event;
@@ -24,23 +47,14 @@ void Game::play()
 				window.close();
 		}
 
-		sf::Texture texture;
-		if (!texture.loadFromFile("res/img/bomberman.png"))
-		{
-			std::cout << "Load failed! " << std::endl;
-			getchar();
-		}
-
-		sf::Sprite sprite;
-		sprite.setTexture(texture);
-		sprite.setTextureRect(sf::IntRect(0, 0, 80, 120));
-		sprite.setScale(0.5, 0.5);
-
-		//sprite.move(sf::Vector2f(5.f, 5.f));
-
 		window.clear(sf::Color::Black);
+		time = clock.restart();
 
-		window.draw(sprite);
+		player.Move(time);
+		player.Update(time);
+		Draw();
+
+		//std::cout << "x = " << player.GetPosition().x << "   y = " << player.GetPosition().y << std::endl;
 
 		window.display();
 

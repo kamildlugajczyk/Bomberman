@@ -8,7 +8,7 @@ sf::Vector2f GraphicObject::GetPosition()
 	return this->position;
 }
 
-void GraphicObject::SetPosition(sf::Vector2f & position)
+void GraphicObject::SetPosition(const sf::Vector2f & position)
 {
 	this->position = position;
 }

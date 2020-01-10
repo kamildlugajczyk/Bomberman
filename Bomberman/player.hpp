@@ -8,8 +8,8 @@
 
 class Player : public GraphicObject
 {
-	float velocity;
-	float defaultVelocity;
+	sf::Vector2f velocity;
+	sf::Vector2f defaultVelocity;
 	bool canGoUp, canGoDown, canGoLeft, canGoRight;
 	States playerState;
 

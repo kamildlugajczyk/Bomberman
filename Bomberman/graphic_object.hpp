@@ -13,7 +13,7 @@ protected:
 public:
 	/* virtual */ sf::Vector2f GetPosition();
 
-	void SetPosition(sf::Vector2f & position);
+	void SetPosition(const sf::Vector2f & position);
 
 	sf::FloatRect GetCollisionBox();
 
