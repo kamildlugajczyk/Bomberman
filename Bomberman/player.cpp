@@ -3,51 +3,123 @@
 
 #include "player.hpp"
 
-void Player::move(sf::Time & dt)
+
+Player::Player(bool up, bool down, bool right, bool left)
+	: canGoUp(up), canGoDown(down), canGoRight(right), canGoLeft(left)
+{
+	defaultVelocity = 200.f;
+	velocity = defaultVelocity;
+
+	collisionBox.width = 50;
+	collisionBox.height = 50;
+
+	playerState = stand;
+}
+
+void Player::Move(const sf::Time & deltaTime)
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-		goUp(dt);
+		GoUp(deltaTime);
 
-	/*if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-		goDown(dt);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+		GoDown(deltaTime);
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-		goLeft(dt);
+		GoLeft(deltaTime);
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-		goRight(dt);*/
+		GoRight(deltaTime);
 }
 
-void Player::goUp(const sf::Time & dt)
+void Player::GoUp(const sf::Time & deltaTime)
 {
-	//sprite.move(sf::Vector2f(5.f, 5.f))
-	/*if (canGoUp)
+	if (canGoUp)
 	{
-		position.y += defaultVelocity * dt.asSeconds;
-	}*/
+		position.y += velocity * deltaTime.asSeconds;
+		playerState = movingUp;
+	}
 }
 
-//void Player::goDown(sf::Time & dt)
-//{
-//	if (canGoDown)
-//	{
-//		position.y -= defaultVelocity * dt.asSeconds;
-//	}
-//}
-//
-//void Player::goLeft(sf::Time & dt)
-//{
-//	if (canGoLeft)
-//	{
-//		position.x -= defaultVelocity * dt.asSeconds;
-//	}
-//}
-//
-//void Player::goRight(sf::Time & dt)
-//{
-//	if (canGoRight)
-//	{
-//		position.x += defaultVelocity * dt.asSeconds;
-//	}
-//}
+void Player::GoDown(const sf::Time & deltaTime)
+{
+	if (canGoDown)
+	{
+		position.y -= velocity * deltaTime.asSeconds;
+		playerState = movingDown;
+	}
+}
 
+void Player::GoLeft(const sf::Time & deltaTime)
+{
+	if (canGoLeft)
+	{
+		position.x -= velocity * deltaTime.asSeconds;
+		playerState = movingLeft;
+	}
+}
+
+void Player::GoRight(const sf::Time & deltaTime)
+{
+	if (canGoRight)
+	{
+		position.x += velocity * deltaTime.asSeconds;
+		playerState = movingRight;
+	}
+}
+
+void Player::ForbidGoingLeft()
+{
+	this->canGoLeft = false;
+}
+
+void Player::ForbidGoingRight()
+{
+	this->canGoRight = false;
+}
+
+void Player::ForbidGoingDown()
+{
+	this->canGoDown = false;
+}
+
+void Player::ForbidGoingUp()
+{
+	this->canGoUp = false;
+}
+
+void Player::Update(const sf::Time deltaTime)
+{
+
+}
+
+void Player::UpdateSprite()
+{
+	switch (playerState)
+	{
+	case stand:
+		/* Tekstura stania */
+		break;
+	case movingLeft:
+		/* Tekstura w lewo */
+		break;
+	case movingRight:
+		/* Tekstura w prawo */
+		break;
+	case movingUp:
+		/* Tekstura z tylu */
+		break;
+	case movingDown:
+		/* Tekstura z przodu */
+		break;
+	/*case win:										// te raczej nie
+		break;
+	case die:
+		break;*/
+	}
+}
+
+void Player::UpdateCollisionBox()									//zastanowic sie
+{
+	collisionBox.left = position.x - 1;
+	collisionBox.top = position.y - 1;
+}

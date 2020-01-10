@@ -138,6 +138,7 @@
     <ClInclude Include="block.hpp" />
     <ClInclude Include="bomb.hpp" />
     <ClInclude Include="breakable_wall.hpp" />
+    <ClInclude Include="enum.hpp" />
     <ClInclude Include="game.hpp" />
     <ClInclude Include="graphic_object.hpp" />
     <ClInclude Include="player.hpp" />

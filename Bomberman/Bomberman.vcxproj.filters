@@ -74,5 +74,8 @@
     <ClInclude Include="breakable_wall.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="enum.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
