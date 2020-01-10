@@ -4,7 +4,10 @@
 
 Game::Game()
 {
-	window.create(sf::VideoMode(800, 600), "Bomberman");
+	windowSize.x = 800;
+	windowSize.y = 600;
+	window.create(sf::VideoMode(windowSize.x, windowSize.y), "Bomberman");
+
 	window.setFramerateLimit(60);
 
 	isOver = false;
@@ -30,8 +33,10 @@ void Game::play()
 
 		sf::Sprite sprite;
 		sprite.setTexture(texture);
-		//sprite.setTextureRect(sf::IntRect(0, 0, 500, 500));
+		sprite.setTextureRect(sf::IntRect(0, 0, 80, 120));
 		sprite.setScale(0.5, 0.5);
+
+		//sprite.move(sf::Vector2f(5.f, 5.f));
 
 		window.clear(sf::Color::Black);
 

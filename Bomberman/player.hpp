@@ -7,10 +7,20 @@
 
 class Player : public GraphicObject
 {
-	float velocity;
-
+	sf::Vector2f velocity;
+	sf::Vector2f defaultVelocity;
+	bool canGoUp, canGoDown, canGoLeft, canGoRight;
+	enum playerState { stand, goLeft, goRight, goUp, goDown, win, die};
 
 public:
-	void move(sf::Time & dt);
+	void move(const sf::Time & deltaTime);
+
+	void goUp(const sf::Time & deltaTime);
+
+	void goDown(const sf::Time & deltaTime);
+
+	void goLeft(const sf::Time & deltaTime);
+
+	void goRight(const sf::Time & deltaTime);
 
 };

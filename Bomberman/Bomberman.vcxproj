@@ -129,6 +129,7 @@
     <ClCompile Include="game.cpp" />
     <ClCompile Include="graphic_object.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="player.cpp" />
     <ClCompile Include="power_up.cpp" />
     <ClCompile Include="solid_wall.cpp" />
     <ClCompile Include="wall.cpp" />

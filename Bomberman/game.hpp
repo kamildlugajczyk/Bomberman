@@ -6,6 +6,7 @@
 class Game
 {
 	sf::RenderWindow window;
+	sf::Vector2f windowSize;
 	bool isOver;
 
 
