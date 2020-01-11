@@ -26,7 +26,6 @@ void GraphicObject::SetTexture(sf::IntRect & dimensions)
 void GraphicObject::LoadTexture(const sf::Texture & texture)
 {
 	sprite.setTexture(texture);
-	//sprite.setScale()																// zastanowic sie
 }
 
 void GraphicObject::Draw(sf::RenderWindow & window)

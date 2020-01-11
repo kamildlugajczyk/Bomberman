@@ -129,6 +129,7 @@
     <ClCompile Include="game.cpp" />
     <ClCompile Include="graphic_object.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="map.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="power_up.cpp" />
     <ClCompile Include="solid_wall.cpp" />
@@ -141,6 +142,7 @@
     <ClInclude Include="enum.hpp" />
     <ClInclude Include="game.hpp" />
     <ClInclude Include="graphic_object.hpp" />
+    <ClInclude Include="map.hpp" />
     <ClInclude Include="player.hpp" />
     <ClInclude Include="power_up.hpp" />
     <ClInclude Include="solid_wall.hpp" />

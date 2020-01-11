@@ -7,5 +7,8 @@
 
 class Block : public GraphicObject
 {
+	bool isCollideable; 
+	bool isInjurious; 
+
 
 };

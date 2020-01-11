@@ -15,9 +15,11 @@ Player::Player(bool up, bool down, bool right, bool left)
 	collisionBox.height = 50;
 
 	playerState = stand;
+
+	sprite.setOrigin(16, 24);
 }
 
-void Player::Move(const sf::Time & deltaTime)
+void Player::MoveWSAD(const sf::Time & deltaTime)
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 		GoUp(deltaTime);
@@ -29,6 +31,21 @@ void Player::Move(const sf::Time & deltaTime)
 		GoLeft(deltaTime);
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+		GoRight(deltaTime);
+}
+
+void Player::MoveArrows(const sf::Time & deltaTime)
+{
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+		GoUp(deltaTime);
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+		GoDown(deltaTime);
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+		GoLeft(deltaTime);
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 		GoRight(deltaTime);
 }
 
@@ -96,32 +113,17 @@ void Player::Update(const sf::Time deltaTime)
 
 void Player::UpdateSprite()
 {
-	/*sprite.setTextureRect(sf::IntRect(0, 0, 80, 120));
-	sprite.setScale(0.5, 0.5);*/
 	switch (playerState)
 	{
 	case stand:
-		
-		sprite.setTextureRect(sf::IntRect(0, 0, 80, 120));
-		sprite.setScale(0.5, 0.5);
-		/* Tekstura stania */
+		sprite.setScale(4.f, 4.f);
 		break;
 	case movingLeft:
-		/* Tekstura w lewo */
+		sprite.setScale(-4.f, 4.f);
 		break;
 	case movingRight:
-		/* Tekstura w prawo */
+		sprite.setScale(4.f, 4.f);
 		break;
-	case movingUp:
-		/* Tekstura z tylu */
-		break;
-	case movingDown:
-		/* Tekstura z przodu */
-		break;
-	/*case win:										// te raczej nie
-		break;
-	case die:
-		break;*/
 	}
 }
 

@@ -16,7 +16,9 @@ class Player : public GraphicObject
 public:
 	Player(bool up, bool down, bool right, bool left);
 
-	void Move(const sf::Time & deltaTime);
+	void MoveWSAD(const sf::Time & deltaTime);
+
+	void MoveArrows(const sf::Time & deltaTime);
 
 	void GoUp(const sf::Time & deltaTime);
 

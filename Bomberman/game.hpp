@@ -9,7 +9,8 @@ class Game
 {
 	sf::RenderWindow window;
 	sf::Vector2f windowSize;
-	Player player {1,1,1,1};
+	Player player1 {1,1,1,1};
+	Player player2 {1,1,1,1};
 	bool isOver;
 
 
