@@ -8,4 +8,6 @@
 class PowerUp : public Block
 {
 
+public:
+	void Update(const sf::Time deltaTime);
 };

@@ -7,5 +7,9 @@
 
 class SolidWall : public Wall
 {
+	int niewiem;
+public:
+	SolidWall();
 
+	void Update(const sf::Time deltaTime);
 };

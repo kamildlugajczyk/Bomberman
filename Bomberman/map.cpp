@@ -4,18 +4,43 @@
 
 #include "map.hpp"
 
-Map::Map()
+Map::Map() : tileSize(64) {};
+
+void Map::loadTexture(const sf::Texture & texture)
 {
-	gameMap = {};
+	textureSet = texture;
 }
+
+void Map::Update()
+{
+	for (int y = 0; y < 15; y++)
+	{
+		for (int x = 0; y < 20; x++)
+		{
+			spriteSet[y][x].setPosition(x * 40, y * 40);
+			//spriteSet[y][x].setScale(1, 1);								moze sie przydac
+			spriteSet[y][x].setTexture(textureSet);
+			//spriteSet[y][x].setTextureRect(sf::IntRect(0, 0, 16, 16));
+		}
+	}
+}
+
 
 void Map::Draw(sf::RenderWindow & window)
 {
-	for (auto y = 0u; y < 15; y++)
+	/*for (auto const & row : spriteSet)
 	{
-		for (auto x = 0u; y < 20; x++)
+		for (auto const & cell : row)
 		{
-			window.draw(tile);
+			window.draw(cell);
+		}
+	}*/
+	//
+	for (int y = 0; y < 15; y++)
+	{
+		for (int x = 0; y < 20; x++)
+		{
+			window.draw(spriteSet[x][y]);
 		}
 	}
 }
