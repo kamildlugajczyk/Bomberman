@@ -21,9 +21,31 @@ Game::Game()
 	isOver = false;
 }
 
+//void Game::LoadResoures()
+//{
+//	// todo : load map
+//
+//	sf::Texture texture_p1;
+//	if (!texture_p1.loadFromFile("res/img/character1.png"))
+//	{
+//		std::cout << "Load failed! " << std::endl;
+//		getchar();
+//	}
+//
+//	sf::Texture texture_p2;
+//	if (!texture_p2.loadFromFile("res/img/character2.png"))
+//	{
+//		std::cout << "Load failed! " << std::endl;
+//		getchar();
+//	}
+//
+//	player1.LoadTexture(texture_p1);
+//	player2.LoadTexture(texture_p2);
+//}
+
 void Game::Draw()
 {
-	//map.Draw(window);
+	map.Draw(window);
 	player1.Draw(window);
 	player2.Draw(window);
 }
@@ -34,60 +56,47 @@ void Game::play()
 	sf::Time time;
 	Map map;
 	
-	//-------------- tymczasowe ---------------------------
-	sf::Texture texture1;
-	if (!texture1.loadFromFile("res/img/character1.png"))
+	////-------------- gracz 1 ---------------------------
+	sf::Texture texture_p1;
+	if (!texture_p1.loadFromFile("res/img/character1.png"))
 	{
 		std::cout << "Load failed! " << std::endl;
 		getchar();
 	}
-	//-------------- tymczasowe ---------------------------
-	sf::Texture texture2;
-	if (!texture2.loadFromFile("res/img/character2.png"))
+	//-------------- gracz 2 ---------------------------
+	sf::Texture texture_p2;
+	if (!texture_p2.loadFromFile("res/img/character2.png"))
 	{
 		std::cout << "Load failed! " << std::endl;
 		getchar();
 	}
-	//-------------- tymczasowe ---------------------------
+	//-------------- mapa ---------------------------
 	sf::Texture solid_texture;
-	if (!solid_texture.loadFromFile("res/img/character1.png"))
+	if (!solid_texture.loadFromFile("res/img/SolidBlock.png"))
 	{
 		std::cout << "Load failed! " << std::endl;
 		getchar();
 	}
-	//------------------------------------------------------
+	//----------------------------------------------
+	
 
-	player1.LoadTexture(texture1);
-	player2.LoadTexture(texture2);
+	player1.LoadTexture(texture_p1);
+	player2.LoadTexture(texture_p2);
+	map.LoadTexture(solid_texture);
 
-	//----------- kafelki na mapie -----------------------------
-	/*std::vector<std::vector<int>> tiles = 
-	{
-		{ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 },
-		{ 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
-		{ 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2 },
-		{ 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
-		{ 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2 },
-		{ 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
-		{ 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2 },
-		{ 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
-		{ 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2 },
-		{ 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
-		{ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 },
-	};*/
-		
-	for (int y = 0; y < 11; y++)
-	{
-		for (int x = 0; x < 15; x++)
-		{
-			SolidWall tile;
-			tile.LoadTexture(solid_texture);
-			//tile.Update(time);
-			tile.SetPosition(sf::Vector2f(x * 40, y * 40));
-			tile.Draw(window);
-		}
-	}
+	//for (int y = 0; y < 11; y++)
+	//{
+	//	for (int x = 0; x < 15; x++)
+	//	{
+	//		SolidWall tile;
+	//		tile.LoadTexture(solid_texture);
+	//		//tile.Update(time);
+	//		tile.SetPosition(sf::Vector2f(x * 40, y * 40));
+	//		tile.Draw(window);
+	//	}
+	//}
 	//-------------------------------------------------------------
+	//LoadResoures();
 
 	while (window.isOpen())
 	{
@@ -104,8 +113,10 @@ void Game::play()
 		player1.MoveWSAD(time);
 		player2.MoveArrows(time);
 
+		//map.Update();
 		player1.Update(time);
 		player2.Update(time);
+
 
 		Draw();
 

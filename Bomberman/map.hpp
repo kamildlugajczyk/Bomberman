@@ -7,16 +7,34 @@
 
 class Map
 {
-	sf::Sprite tile;
-	std::vector<std::vector<unsigned int>> gameMap;
+
+	std::vector<std::vector<Block>> blocks;
+	std::vector<std::vector<unsigned int>> gameMap = 
+	{
+		{ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 },
+		{ 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
+		{ 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2 },
+		{ 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
+		{ 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2 },
+		{ 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
+		{ 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2 },
+		{ 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
+		{ 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2 },
+		{ 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
+		{ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 }
+	};
+
 	std::vector<std::vector<sf::Sprite>> spriteSet;
 	sf::Texture textureSet;
 	int tileSize;
 
 public:
+
 	Map();
 
-	void loadTexture(const sf::Texture & texture);
+	void LoadTiles();
+
+	void LoadTexture(const sf::Texture & texture);
 
 	void Update();
 
