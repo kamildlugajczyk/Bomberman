@@ -13,6 +13,7 @@ class Block : public GraphicObject
 	bool isInjurious; 
 
 public:
+	void Update(const sf::Time deltaTime);
 
 	//virtual void Update(const sf::Time deltaTime);                   // wirtualna ?
 };

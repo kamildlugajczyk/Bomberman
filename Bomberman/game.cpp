@@ -6,6 +6,7 @@
 #include "player.hpp"
 #include "map.hpp"
 #include "solid_wall.hpp"
+#include "breakable_wall.hpp"
 
 Game::Game()
 {
@@ -45,7 +46,7 @@ Game::Game()
 
 void Game::Draw()
 {
-	map.Draw(window);
+	//map.Draw(window);
 	player1.Draw(window);
 	player2.Draw(window);
 }
@@ -54,7 +55,6 @@ void Game::play()
 {
 	sf::Clock clock;
 	sf::Time time;
-	Map map;
 	
 	////-------------- gracz 1 ---------------------------
 	sf::Texture texture_p1;
@@ -78,25 +78,78 @@ void Game::play()
 		getchar();
 	}
 	//----------------------------------------------
-	
 
 	player1.LoadTexture(texture_p1);
 	player2.LoadTexture(texture_p2);
-	map.LoadTexture(solid_texture);
+	//map.LoadTexture(solid_texture);
+	//map.LoadTiles(solid_texture);
+	//map.Update(solid_texture);
 
-	//for (int y = 0; y < 11; y++)
-	//{
-	//	for (int x = 0; x < 15; x++)
-	//	{
-	//		SolidWall tile;
-	//		tile.LoadTexture(solid_texture);
-	//		//tile.Update(time);
-	//		tile.SetPosition(sf::Vector2f(x * 40, y * 40));
-	//		tile.Draw(window);
-	//	}
-	//}
 	//-------------------------------------------------------------
 	//LoadResoures();
+
+	//----------------
+	/*BreakableWall * breakable = new BreakableWall;
+	breakable->LoadTexture(solid_texture);
+	breakable->SetPosition(sf::Vector2f (100, 100));
+	breakable->Draw(window);*/
+
+	//------------------------------------------------------GIGA TEST-------------------------------------------------------
+	
+	unsigned int gameMap[11][15] =
+	{
+		{ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 },
+		{ 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
+		{ 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2 },
+		{ 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
+		{ 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2 },
+		{ 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
+		{ 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2 },
+		{ 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
+		{ 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2 },
+		{ 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
+		{ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 }
+	};
+
+	Block blocks[11][15];
+
+	for (int w = 0; w < 11; w++)
+	{
+		for (int k = 0; k < 15; k++)
+		{
+			if (gameMap[w][k] == 1)									// 0 nic , 1 do zniszczenia, 2 nie do zniszczenia
+			{
+				BreakableWall * breakable = new BreakableWall;
+				blocks[w][k] = *breakable;
+				//blocks[w][k].SetPosition(sf::Vector2f(w * 64, k * 64));
+				blocks[w][k].LoadTexture(solid_texture);
+
+				blocks[w][k].Update(time);
+				
+			}
+			else if (gameMap[w][k] == 2)
+			{
+				SolidWall * solid = new SolidWall;
+				blocks[w][k] = *solid;
+				blocks[w][k].SetPosition(sf::Vector2f(w * 64, k * 64));
+				blocks[w][k].LoadTexture(solid_texture);
+				blocks[w][k].Update(time);
+
+			}
+			else if (gameMap[w][k] == 0)
+			{
+				SolidWall * solid = new SolidWall;
+				blocks[w][k] = *solid;
+				blocks[w][k].SetPosition(sf::Vector2f(w * 64, k * 64));
+				//blocks[w][k].LoadTexture(solid_texture);
+
+				blocks[w][k].Update(time);
+
+			}
+		}
+	}
+
+	//------------------------------------------------------KONIEC GIGA TESTU--------------------------------------------------
 
 	while (window.isOpen())
 	{
@@ -110,18 +163,26 @@ void Game::play()
 		window.clear(sf::Color::Black);
 		time = clock.restart();
 
+		//map.LoadTiles(solid_texture);
+
 		player1.MoveWSAD(time);
 		player2.MoveArrows(time);
 
-		//map.Update();
+		
 		player1.Update(time);
 		player2.Update(time);
 
+		//map.Draw(window);
 
 		Draw();
-
-		//std::cout << "x = " << player.GetPosition().x << "   y = " << player.GetPosition().y << std::endl;
-
+		for (int w = 0; w < 11; w++)
+		{
+			for (int k = 0; k < 15; k++)
+			{
+				blocks[w][k].Draw(window);
+			}
+		}
+		
 		window.display();
 
 	}

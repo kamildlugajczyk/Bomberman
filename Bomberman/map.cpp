@@ -8,26 +8,42 @@
 
 Map::Map() : tileSize(64) {};
 
-void Map::LoadTiles()
+void Map::LoadTiles(sf::Texture solid_texture)
 {
-	for (int y = 0; y < 15; y++)
+	for (int w = 0; w < 11; w++)
 	{
-		for (int x = 0; y < 20; x++)
-		{
-			switch (gameMap[x][y])						// 0 nic , 1 do zniszczenia, 2 nie do zniszczenia
+		for (int k = 0; k < 15; k++)
+		{				
+			//if (gameMap[w][k] == 1)									// 0 nic , 1 do zniszczenia, 2 nie do zniszczenia
+			//{
+			//	BreakableWall * breakable = new BreakableWall;
+			//	blocks[w][k] = breakable;
+			//	blocks[w][k]->SetPosition(sf::Vector2f(w * 40, k * 40));
+			//}
+			/*else*/ if (gameMap[w][k] == 2)
 			{
-			case 0:
-
-				break;
-			case 1:
-				Break
-				break;
-			case 2:
-
-				break;
+				SolidWall * solid = new SolidWall;
+				blocks[w][k] = solid;
+				blocks[w][k]->LoadTexture(solid_texture);
+				blocks[w][k]->SetPosition(sf::Vector2f(w * 40, k * 40));
 			}
+			/*else if (gameMap[w][k] == 0)
+			{
+				SolidWall * solid = new SolidWall;
+				blocks[w][k] = solid;
+				blocks[w][k]->SetPosition(sf::Vector2f(w * 40, k * 40));
+			}*/
 		}
 	}
+
+	/*for (int w = 0; w < 11; w++)
+	{
+		for (int k = 0; k < 15; k++)
+		{
+			std::cout << "(" << blocks[w][k].GetPosition().x << ", " << blocks[w][k].GetPosition().y << ") ";
+		}
+		std::cout << std::endl;
+	}*/
 }
 
 void Map::LoadTexture(const sf::Texture & texture)
@@ -35,31 +51,41 @@ void Map::LoadTexture(const sf::Texture & texture)
 	textureSet = texture;
 }
 
-void Map::Update()
+void Map::Update(sf::Texture solid_texture)
 {
-	for (int y = 0; y < 15; y++)
+	
+
+	for (int w = 0; w < 11; w++)
 	{
-		for (int x = 0; y < 11; x++)
+		for (int k = 0; k < 15; k++)
 		{
-			/*SolidWall sciana;
-			sciana.SetTexture()*/
-			spriteSet[y][x].setPosition(x * 40, y * 40);
+			/*blocks[w][k]->SetPosition(sf::Vector2f(w * 40, k * 40));*/
 			//spriteSet[y][x].setScale(1, 1);								moze sie przydac
-			spriteSet[y][x].setTexture(textureSet);
+			//blocks[y][x].LoadTexture(textureSet);
+			
+			/*blocks[w][k]->LoadTexture(solid_texture);*/
 			//spriteSet[y][x].setTextureRect(sf::IntRect(0, 0, 16, 16));
 		}
 	}
-}
 
+	for (int w = 0; w < 11; w++)
+	{
+		for (int k = 0; k < 15; k++)
+		{
+			//std::vector<std::vector<Block>> blocks;
+			std::cout << "(" << blocks[w][k]->GetPosition().x << ", " << blocks[w][k]->GetPosition().y << ") ";
+		}
+		std::cout << std::endl;
+	}
+}
 
 void Map::Draw(sf::RenderWindow & window)
 {
-	for (int y = 0; y < 15; y++)
+	for (int w = 0; w < 11; w++)
 	{
-		for (int x = 0; x < 11; x++)
+		for (int k = 0; k < 15; k++)
 		{
-			window.draw(spriteSet[x][y]);
+			blocks[w][k]->Draw(window);
 		}
 	}
-
 }

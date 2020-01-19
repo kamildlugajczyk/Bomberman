@@ -12,7 +12,7 @@ class Game
 	sf::Vector2f windowSize;
 	Player player1 {1,1,1,1};
 	Player player2 {1,1,1,1};
-	Map map;
+	//Map map;
 	bool isOver;
 
 public:

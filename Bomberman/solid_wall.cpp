@@ -3,11 +3,6 @@
 
 #include "solid_wall.hpp"
 
-SolidWall::SolidWall()
-{
-	
-}
-
 void SolidWall::Update(const sf::Time deltaTime)
 {
 

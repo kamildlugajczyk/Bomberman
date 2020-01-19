@@ -3,3 +3,7 @@
 
 #include "block.hpp"
 
+void Block::Update(const sf::Time deltaTime)
+{
+	sprite.setPosition(position);
+}
