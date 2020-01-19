@@ -8,39 +8,35 @@
 
 class Map
 {
+	sf::Texture textureSet;
+	int tileSize;
 
 	Block * blocks[11][15];
-	//SolidWall *sciana[11][15];
-
-	//std::vector<std::vector<unsigned int>> gameMap = 
 	unsigned int gameMap[11][15] = 
 	{
 		{ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 },
 		{ 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
+		{ 2, 0, 2, 1, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2 },
+		{ 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
+		{ 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 1, 2, 0, 2 },
+		{ 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 2 },
 		{ 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2 },
-		{ 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
-		{ 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2 },
-		{ 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
-		{ 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2 },
-		{ 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
-		{ 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2 },
-		{ 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
+		{ 2, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 2 },
+		{ 2, 0, 2, 0, 2, 0, 2, 1, 2, 0, 2, 0, 2, 0, 2 },
+		{ 2, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
 		{ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 }
 	};
 
-	//std::vector<std::vector<sf::Sprite>> spriteSet;
-	sf::Texture textureSet;
-	int tileSize;
 
 public:
 
 	Map();
 
-	void LoadTiles(sf::Texture solid_texture);
+	void LoadTiles();
 
 	void LoadTexture(const sf::Texture & texture);
 
-	void Update(sf::Texture solid_texture);
+	void Update(const sf::Time deltaTime);
 
 	void Draw(sf::RenderWindow & window);
 };

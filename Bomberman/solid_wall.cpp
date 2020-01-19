@@ -3,7 +3,11 @@
 
 #include "solid_wall.hpp"
 
-void SolidWall::Update(const sf::Time deltaTime)
+SolidWall::SolidWall()
 {
-
+	if (!solid_texture.loadFromFile("res/img/SolidBlock.png"))
+	{
+		std::cout << "Load failed! " << std::endl;
+		getchar();
+	}
 }

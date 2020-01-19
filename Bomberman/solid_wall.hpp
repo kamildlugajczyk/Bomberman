@@ -7,10 +7,9 @@
 
 class SolidWall : public Wall
 {
-	/*sf::Texture solid_texture;*/
 
 public:
-	//SolidWall();
+	sf::Texture solid_texture;
 
-	void Update(const sf::Time deltaTime);
+	SolidWall();
 };

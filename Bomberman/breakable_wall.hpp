@@ -8,4 +8,8 @@
 class BreakableWall : public Wall
 {
 
+public:
+	sf::Texture breakable_wall;
+
+	BreakableWall();
 };

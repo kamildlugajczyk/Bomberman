@@ -12,13 +12,15 @@ class Game
 	sf::Vector2f windowSize;
 	Player player1 {1,1,1,1};
 	Player player2 {1,1,1,1};
-	//Map map;
+	Map map;
 	bool isOver;
 
 public:
 	Game();
 
 	//void LoadResoures();
+
+	void Update(const sf::Time deltaTime);
 
 	void Draw();
 
