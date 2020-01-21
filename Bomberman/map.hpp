@@ -11,7 +11,6 @@ class Map
 	sf::Texture textureSet;
 	int tileSize;
 
-	Block * blocks[11][15];
 	unsigned int gameMap[11][15] = 
 	{
 		{ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 },
@@ -27,8 +26,8 @@ class Map
 		{ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 }
 	};
 
-
 public:
+	Block * blocks[11][15];
 
 	Map();
 

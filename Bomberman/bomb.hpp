@@ -7,8 +7,12 @@
 
 class Bomb : public Block
 {
-
+	int timeSinceLast;
 
 public:
+	sf::Texture bombTexture;
+
+	Bomb();
+
 	void Update(const sf::Time deltaTime);
 };

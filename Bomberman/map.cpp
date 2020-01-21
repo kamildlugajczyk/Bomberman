@@ -6,6 +6,7 @@
 #include "solid_wall.hpp"
 #include "breakable_wall.hpp"
 
+
 Map::Map() : tileSize(64) {};
 
 void Map::LoadTiles()

@@ -7,6 +7,7 @@
 #include "map.hpp"
 #include "solid_wall.hpp"
 #include "breakable_wall.hpp"
+#include "bomb.hpp"
 
 Game::Game()
 {
@@ -16,8 +17,8 @@ Game::Game()
 
 	window.setFramerateLimit(60);
 
-	player1.SetPosition(sf::Vector2f( 200, 200));
-	player1.SetPosition(sf::Vector2f( 600, 200));
+	player1.SetPosition(sf::Vector2f( 96, 96));
+	player2.SetPosition(sf::Vector2f( 870, 605));
 
 	isOver = false;
 }
@@ -34,6 +35,7 @@ void Game::Draw()
 	map.Draw(window);
 	player1.Draw(window);
 	player2.Draw(window);
+	
 }
 
 void Game::play()
@@ -47,6 +49,7 @@ void Game::play()
 	{
 		std::cout << "Load failed! " << std::endl;
 		getchar();
+		return;
 	}
 	//-------------- gracz 2 ---------------------------
 	sf::Texture texture_p2;
@@ -54,14 +57,12 @@ void Game::play()
 	{
 		std::cout << "Load failed! " << std::endl;
 		getchar();
+		return;
 	}
 	//--------------------------------------------------
 
 	player1.LoadTexture(texture_p1);
 	player2.LoadTexture(texture_p2);
-
-	//------------------------------------------------------GIGA TEST-------------------------------------------------------
-
 	map.LoadTiles();
 
 	while (window.isOpen())
@@ -76,7 +77,7 @@ void Game::play()
 		window.clear(sf::Color::Black);
 		time = clock.restart();
 
-		player1.MoveWSAD(time);
+		player1.MoveWSAD(time, map);
 		player2.MoveArrows(time);
 
 		Update(time);

@@ -3,6 +3,9 @@
 #include <SFML/Graphics.hpp>
 
 #include "player.hpp"
+#include "bomb.hpp"
+#include "map.hpp"
+
 
 
 Player::Player(bool up, bool down, bool right, bool left)
@@ -19,7 +22,7 @@ Player::Player(bool up, bool down, bool right, bool left)
 	sprite.setOrigin(16, 24);
 }
 
-void Player::MoveWSAD(const sf::Time & deltaTime)
+void Player::MoveWSAD(const sf::Time & deltaTime, Map & map)
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 		GoUp(deltaTime);
@@ -32,6 +35,20 @@ void Player::MoveWSAD(const sf::Time & deltaTime)
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 		GoRight(deltaTime);
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+	{
+		Bomb * bomb = new Bomb();
+		bomb->LoadTexture(bomb->bombTexture);
+
+		sf::Vector2f bombLocation = this->GetPosition();									// robi zeby bomba  
+		bombLocation.x = ((int)bombLocation.x / 64) * 64;									// pojawila sie dokladnie
+		bombLocation.y = ((int)bombLocation.y / 64) * 64;									// w kratce a nie np w polowie
+
+		bomb->SetPosition(bombLocation);
+
+		map.blocks[(int)(this->position.y) / 64][(int)(this->position.x) / 64] = bomb;
+	}
 }
 
 void Player::MoveArrows(const sf::Time & deltaTime)
@@ -116,13 +133,13 @@ void Player::UpdateSprite()
 	switch (playerState)
 	{
 	case stand:
-		sprite.setScale(4.f, 4.f);
+		sprite.setScale(3.3f, 3.3f);
 		break;
 	case movingLeft:
-		sprite.setScale(-4.f, 4.f);
+		sprite.setScale(-3.3f, 3.3f);
 		break;
 	case movingRight:
-		sprite.setScale(4.f, 4.f);
+		sprite.setScale(3.3f, 3.3f);
 		break;
 	}
 }
@@ -132,3 +149,14 @@ void Player::UpdateCollisionBox()									//zastanowic sie
 	collisionBox.left = position.x - 1;
 	collisionBox.top = position.y - 1;
 }
+
+//void Player::PlaceBomb(const sf::Time deltaTime)
+//{
+//	Bomb * bomb = new Bomb();
+//
+//	//gameMap[1][1] = 1;
+//
+//	bomb->SetPosition(this->position);
+//
+//	bomb->Update(deltaTime);
+//}

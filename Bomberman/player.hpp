@@ -5,6 +5,8 @@
 
 #include "graphic_object.hpp"
 #include "enum.hpp"
+#include "bomb.hpp"
+#include "map.hpp"
 
 class Player : public GraphicObject
 {
@@ -16,7 +18,7 @@ class Player : public GraphicObject
 public:
 	Player(bool up, bool down, bool right, bool left);
 
-	void MoveWSAD(const sf::Time & deltaTime);
+	void MoveWSAD(const sf::Time & deltaTime, Map & map);
 
 	void MoveArrows(const sf::Time & deltaTime);
 
@@ -42,4 +44,5 @@ public:
 
 	void UpdateCollisionBox();
 
+	void PlaceBomb(const sf::Time deltaTime);
 };
