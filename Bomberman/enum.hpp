@@ -3,4 +3,4 @@
 
 enum States { stand, movingLeft, movingRight, movingUp, movingDown, win, die };
 
-enum BlockType { };
+//enum BlockType { solidBlock, breakableBlock, bacgroundBlock, bombBlock };

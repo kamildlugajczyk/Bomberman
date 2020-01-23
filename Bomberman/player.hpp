@@ -12,8 +12,10 @@ class Player : public GraphicObject
 {
 	sf::Vector2f velocity;
 	sf::Vector2f defaultVelocity;
-	bool canGoUp, canGoDown, canGoLeft, canGoRight;
 	States playerState;
+
+	bool canGoUp, canGoDown, canGoLeft, canGoRight;
+	float timeSinceBomb, bombCooldown;
 
 public:
 	Player(bool up, bool down, bool right, bool left);

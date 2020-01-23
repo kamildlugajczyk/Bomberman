@@ -7,12 +7,16 @@
 
 class Bomb : public Block
 {
-	int timeSinceLast;
+	float explodeTime;
+
+
+
+	//bool isDestroyed = false;
 
 public:
 	sf::Texture bombTexture;
 
 	Bomb();
 
-	void Update(const sf::Time deltaTime);
+	void Update (const sf::Time deltaTime) override;
 };

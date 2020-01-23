@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "solid_wall.hpp"
+#include "block.hpp"
 
 SolidWall::SolidWall()
 {
@@ -10,4 +11,6 @@ SolidWall::SolidWall()
 		std::cout << "Load failed! " << std::endl;
 		getchar();
 	}
+
+	
 }

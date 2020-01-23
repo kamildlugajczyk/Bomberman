@@ -9,7 +9,7 @@
 
 
 Player::Player(bool up, bool down, bool right, bool left)
-	: canGoUp(up), canGoDown(down), canGoRight(right), canGoLeft(left)
+	: canGoUp(up), canGoDown(down), canGoRight(right), canGoLeft(left), timeSinceBomb(0.f), bombCooldown(2.f)
 {
 	defaultVelocity = { 200.f, 200.f };
 	velocity = defaultVelocity;
@@ -24,6 +24,8 @@ Player::Player(bool up, bool down, bool right, bool left)
 
 void Player::MoveWSAD(const sf::Time & deltaTime, Map & map)
 {
+	timeSinceBomb -= deltaTime.asSeconds();
+
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 		GoUp(deltaTime);
 
@@ -36,8 +38,10 @@ void Player::MoveWSAD(const sf::Time & deltaTime, Map & map)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 		GoRight(deltaTime);
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && timeSinceBomb <= 0)
 	{
+		timeSinceBomb = bombCooldown;
+
 		Bomb * bomb = new Bomb();
 		bomb->LoadTexture(bomb->bombTexture);
 

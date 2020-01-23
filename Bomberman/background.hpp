@@ -5,13 +5,11 @@
 
 #include "wall.hpp"
 
-class SolidWall : public Wall
+class Background : public Wall
 {
 
 public:
+	sf::Texture backgroundTexture;
 
-
-	sf::Texture solid_texture;
-
-	SolidWall();
+	Background();
 };

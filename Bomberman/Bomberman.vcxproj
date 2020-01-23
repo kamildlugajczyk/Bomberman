@@ -123,9 +123,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="background.cpp" />
     <ClCompile Include="block.cpp" />
     <ClCompile Include="bomb.cpp" />
     <ClCompile Include="breakable_wall.cpp" />
+    <ClCompile Include="explosion.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="graphic_object.cpp" />
     <ClCompile Include="main.cpp" />
@@ -136,10 +138,12 @@
     <ClCompile Include="wall.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="background.hpp" />
     <ClInclude Include="block.hpp" />
     <ClInclude Include="bomb.hpp" />
     <ClInclude Include="breakable_wall.hpp" />
     <ClInclude Include="enum.hpp" />
+    <ClInclude Include="explosion.hpp" />
     <ClInclude Include="game.hpp" />
     <ClInclude Include="graphic_object.hpp" />
     <ClInclude Include="map.hpp" />
