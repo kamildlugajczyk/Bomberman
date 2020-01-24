@@ -4,17 +4,19 @@
 #include <SFML/Graphics.hpp>
 
 #include "graphic_object.hpp"
+#include "enum.hpp"
 
 class Block : public GraphicObject
 {
-	enum BlockType { solidBlock, breakableBlock, bacgroundBlock, bombBlock };
-	//sf::Sprite block_sprite;
 
+	//sf::Sprite block_sprite;
 
 	/*bool isCollideable; 
 	bool isInjurious; */
 
 public:
+	int type;
+
 	bool destroyed = false;
 
 	virtual void Update(const sf::Time deltaTime);
@@ -28,4 +30,6 @@ public:
 	bool IsExploded() { return exploded; };
 
 	void Explode() { exploded = true; };
+
+	sf::FloatRect blockCollider;
 };

@@ -9,10 +9,6 @@ class Bomb : public Block
 {
 	float explodeTime;
 
-
-
-	//bool isDestroyed = false;
-
 public:
 	sf::Texture bombTexture;
 

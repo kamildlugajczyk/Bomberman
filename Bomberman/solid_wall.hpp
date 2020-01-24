@@ -7,7 +7,7 @@
 
 class SolidWall : public Wall
 {
-
+	//int type = solidBlock;
 public:
 
 

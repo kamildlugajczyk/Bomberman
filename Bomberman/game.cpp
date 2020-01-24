@@ -17,7 +17,7 @@ Game::Game()
 
 	window.setFramerateLimit(60);
 
-	player1.SetPosition(sf::Vector2f( 96, 96));
+	player1.SetPosition(sf::Vector2f( 80, 80));
 	player2.SetPosition(sf::Vector2f( 870, 605));
 
 	isOver = false;
@@ -78,7 +78,7 @@ void Game::play()
 		time = clock.restart();
 
 		player1.MoveWSAD(time, map);
-		player2.MoveArrows(time);
+		player2.MoveArrows(time, map);
 
 		Update(time);
 

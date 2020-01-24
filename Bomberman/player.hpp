@@ -22,15 +22,15 @@ public:
 
 	void MoveWSAD(const sf::Time & deltaTime, Map & map);
 
-	void MoveArrows(const sf::Time & deltaTime);
+	void MoveArrows(const sf::Time & deltaTime, Map & map);
 
-	void GoUp(const sf::Time & deltaTime);
+	void GoUp(const sf::Time & deltaTime, Map & map);
 
-	void GoDown(const sf::Time & deltaTime);
+	void GoDown(const sf::Time & deltaTime, Map & map);
 
-	void GoLeft(const sf::Time & deltaTime);
+	void GoLeft(const sf::Time & deltaTime, Map & map);
 
-	void GoRight(const sf::Time & deltaTime);
+	void GoRight(const sf::Time & deltaTime, Map & map);
 
 	void ForbidGoingLeft();
 
@@ -46,5 +46,16 @@ public:
 
 	void UpdateCollisionBox();
 
-	void PlaceBomb(const sf::Time deltaTime);
+	sf::FloatRect collider;
+
+	sf::FloatRect nextPosition;
+
+	//bool IsColidingWithAnything();
+
+
+	//void CheckForCollisions(const sf::Time & deltaTime, Map & map);
+
+	bool CheckForCollisions(const sf::Time & deltaTime, Map & map);
+
+
 };

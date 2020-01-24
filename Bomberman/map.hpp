@@ -5,11 +5,11 @@
 #include <SFML/Graphics.hpp>
 
 #include "block.hpp"
+//#include "player.hpp"
 
 class Map
 {
 	sf::Texture textureSet;
-	int tileSize;
 
 	unsigned int gameMap[11][15] = 
 	{
@@ -27,15 +27,19 @@ class Map
 	};
 
 public:
+	int tileSize;
+
 	Block * blocks[11][15];
 
 	Map();
 
 	void LoadTiles();
 
-	void LoadTexture(const sf::Texture & texture);
-
 	void Update(const sf::Time deltaTime);
 
 	void Draw(sf::RenderWindow & window);
+
+	//bool CheckForCollisions(Player & player);
+
+	//bool IsCollidingWithAnything();
 };
