@@ -15,8 +15,8 @@ Player::Player(bool up, bool down, bool right, bool left)
 	defaultVelocity = { 200.f, 200.f };
 	velocity = defaultVelocity;
 
-	/*collisionBox.width = 50;
-	collisionBox.height = 50;*/
+	collisionBox.width = 48;
+	collisionBox.height = 48;
 
 	/*sf::FloatRect helpCollider(sf::Vector2f(this->GetPosition().x, this->GetPosition().y), sf::Vector2f(30, 30));
 	collider = helpCollider;*/
@@ -31,7 +31,8 @@ void Player::MoveWSAD(const sf::Time & deltaTime, Map & map)
 {
 	timeSinceBomb -= deltaTime.asSeconds();
 
-	
+	CheckForCollisions(deltaTime, map);
+
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 		GoUp(deltaTime, map);
@@ -103,17 +104,20 @@ void Player::GoUp(const sf::Time & deltaTime, Map & map)
 		position.y -= velocity.y * deltaTime.asSeconds();
 		playerState = movingUp;
 
+
+
+
 		/*if(map.blocks[(int)(this->position.y) / 64][(int)(this->position.x) / 64]->blockCollider.intersects(collider))*/
 
 
 		//CheckForCollisions(deltaTime, map);
 
-		if (this->CheckForCollisions(deltaTime, map))
+		/*if (this->CheckForCollisions(deltaTime, map))
 		{
 			std::cout << " Kolizja z gory \n";
 			position.y += velocity.y * deltaTime.asSeconds();
 
-		}
+		}*/
 	}
 }
 
@@ -124,17 +128,19 @@ void Player::GoDown(const sf::Time & deltaTime, Map & map)
 		position.y += velocity.y * deltaTime.asSeconds();
 		playerState = movingDown;
 
+
+
 		//sf::Vector2f helpPosition = position;
 
 		//CheckForCollisions(deltaTime, map);
 
-		if (this->CheckForCollisions(deltaTime, map))
-		{
-			std::cout << " Kolizja z dolu \n";
-			position.y -= velocity.y * deltaTime.asSeconds();
-			//position = helpPosition;
+		//if (this->CheckForCollisions(deltaTime, map))
+		//{
+		//	std::cout << " Kolizja z dolu \n";
+		//	position.y -= velocity.y * deltaTime.asSeconds();
+		//	//position = helpPosition;
 
-		}
+		//}
 	}
 }
 
@@ -145,19 +151,22 @@ void Player::GoLeft(const sf::Time & deltaTime, Map & map)
 		position.x -= velocity.x * deltaTime.asSeconds();
 		playerState = movingLeft;
 
+		//CheckForCollisions(deltaTime, map);
+
+
 		//sf::Vector2f helpPosition = position;
 		//
 		//CheckForCollisions(deltaTime, map);
 
-		if (this->CheckForCollisions(deltaTime, map))
-		{
-			std::cout << " Kolizja z lewej \n";
+		//if (this->CheckForCollisions(deltaTime, map))
+		//{
+		//	std::cout << " Kolizja z lewej \n";
 
-			position.x += velocity.x * deltaTime.asSeconds();
-			//this->SetPosition(sf::Vector2f(position.x + velocity.x * deltaTime.asSeconds(), position.y));
-			//position = helpPosition;
+		//	position.x += velocity.x * deltaTime.asSeconds();
+		//	//this->SetPosition(sf::Vector2f(position.x + velocity.x * deltaTime.asSeconds(), position.y));
+		//	//position = helpPosition;
 
-		}
+		//}
 	}
 }
 
@@ -169,29 +178,33 @@ void Player::GoRight(const sf::Time & deltaTime, Map & map)
 		position.x += velocity.x * deltaTime.asSeconds();
 		playerState = movingRight;
 
+		//CheckForCollisions(deltaTime, map);
+
+
 		//sf::Vector2f helpPosition = position;
 		//CheckForCollisions(deltaTime, map);
 
-		if (this->CheckForCollisions(deltaTime, map))
-		{
-			//std::cout << " Kolizja z prawej \n";
-			position.x -= velocity.x * deltaTime.asSeconds();
-			//this->SetPosition(sf::Vector2f(position.x - velocity.x * deltaTime.asSeconds(), position.y));
+		//if (this->CheckForCollisions(deltaTime, map))
+		//{
+		//	//std::cout << " Kolizja z prawej \n";
+		//	position.x -= velocity.x * deltaTime.asSeconds();
+		//	//this->SetPosition(sf::Vector2f(position.x - velocity.x * deltaTime.asSeconds(), position.y));
 
-			//position = helpPosition;
-		}
-		//this->SetPosition(position);
+		//	//position = helpPosition;
+		//}
+		////this->SetPosition(position);
 	}
 }
 
 void Player::Update(const sf::Time deltaTime)
 {
 	//UpdateSprite();
+	UpdateCollisionBox();
 
-	sf::FloatRect helpCollider(sf::Vector2f(this->GetPosition().y, this->GetPosition().x), sf::Vector2f(32, 32));
+	//sf::FloatRect helpCollider(sf::Vector2f(this->GetPosition().y, this->GetPosition().x), sf::Vector2f(48, 48));
 	//sf::FloatRect helpCollider(sf::Vector2f(this->GetPosition().y - 16 , this->GetPosition().x - 16), sf::Vector2f(32, 32));
 
-	collider = helpCollider;
+	//collider = helpCollider;
 
 	sprite.setPosition(position);
 }
@@ -218,19 +231,23 @@ void Player::UpdateCollisionBox()									//zastanowic sie
 	collisionBox.top = position.y - 1;
 }
 
-bool Player::CheckForCollisions(const sf::Time & deltaTime, Map & map)
-{
-	for (int w = 0; w < 11; w++)
-		for (int k = 0; k < 15; k++)
-		{
-			if ((map.blocks[w][k]->type != backgroundBlock) && (map.blocks[w][k]->blockCollider.intersects(collider)))
-			{
-				std::cout << map.blocks[w][k] << " intersects on " << w << ", " << k << std::endl;
-				return true;
-			}
-		}
-	return false;
-}
+//bool Player::CheckForCollisions(const sf::Time & deltaTime, Map & map)
+//{
+//	for (int w = 0; w < 11; w++)
+//		for (int k = 0; k < 15; k++)
+//		{
+//			nextPosition = collider;
+//			nextPosition.left +=  velocity.x * deltaTime.asSeconds();
+//			nextPosition.top +=  velocity.y * deltaTime.asSeconds();
+//
+//			if ((map.blocks[w][k]->type != backgroundBlock) && (map.blocks[w][k]->blockCollider.intersects(nextPosition)))
+//			{
+//				std::cout << map.blocks[w][k] << " intersects on " << w << ", " << k << std::endl;
+//				return true;
+//			}
+//		}
+//	return false;
+//}
 
 //bool Player::CheckForCollisions(const sf::Time & deltaTime, Map & map)
 //{
@@ -280,9 +297,45 @@ bool Player::CheckForCollisions(const sf::Time & deltaTime, Map & map)
 //	return false;
 //}
 
-//void Player::CheckForCollisions(const sf::Time & deltaTime, Map & map)
-//{
-	//for (int w = 0; w < 11; w++)
+void Player::CheckForCollisions(const sf::Time & deltaTime, Map & map)
+{
+	float leftPlayerEdge = this->GetCollisionBox().left;
+	float rightPlayerEdge = this->GetCollisionBox().left + this->GetCollisionBox().width;
+	float topPlayerEdge = this->GetCollisionBox().top;
+	float bottomPlayerEdge = this->GetCollisionBox().top + this->GetCollisionBox().height;
+	
+	if (map.blocks[(int)(topPlayerEdge / 64)][(int)((leftPlayerEdge - 1) / 64)]->type != backgroundBlock || map.blocks[(int)(bottomPlayerEdge / 64)][(int)((leftPlayerEdge - 1) / 64)]->type != backgroundBlock)
+		this->ForbidGoingLeft();
+	else
+		this->AllowGoingLeft();
+	
+	if (map.blocks[(int)(topPlayerEdge / 64)][(int)((rightPlayerEdge + 1) / 64)]->type != backgroundBlock || map.blocks[(int)(bottomPlayerEdge / 64)][(int)((rightPlayerEdge + 1) / 64)]->type != backgroundBlock)
+		this->ForbidGoingRight();
+	else
+		this->AllowGoingRight();
+
+
+
+	/*if (map.blocks[(int)((leftPlayerEdge - 1) / 64)][(int)(topPlayerEdge / 64)]->type != backgroundBlock || map.blocks[(int)((leftPlayerEdge - 1) / 64)][(int)(bottomPlayerEdge / 64)]->type != backgroundBlock)
+		this->ForbidGoingLeft();
+	else
+		this->AllowGoingLeft();
+	if (map.blocks[(int)((rightPlayerEdge + 1) / 64)][(int)(topPlayerEdge / 64)]->type != backgroundBlock || map.blocks[(int)((rightPlayerEdge + 1) / 64)][(int)(bottomPlayerEdge / 64)]->type != backgroundBlock)
+		this->ForbidGoingRight();
+	else
+		this->AllowGoingRight();
+*/
+
+
+}
+
+
+
+
+
+
+
+//for (int w = 0; w < 11; w++)
 	//	for (int k = 0; k < 15; k++)
 	//	{
 	//		nextPosition = collider;
@@ -342,51 +395,3 @@ bool Player::CheckForCollisions(const sf::Time & deltaTime, Map & map)
 	//			}
 	//		}
 	//	}
-
-	/*float leftPlayerEdge = collider.left;
-	float rightPlayerEdge = collider.left + collider.width;
-	float topPlayerEdge = collider.top;
-	float bottomPlayerEdge = collider.top + collider.height;
-
-	if (map.blocks[(int)topPlayerEdge][(int)(leftPlayerEdge - 1)]->blockCollider.intersects() || map.blocks[bottomPlayerEdge / tileSize][(leftPlayerEdge - 1) / tileSize].getIsCollideable())
-		player.forbidGoingLeft();
-	else
-		player.allowGoingLeft();
-
-	if (map.blocks[topPlayerEdge / tileSize][(rightPlayerEdge + 1) / tileSize].getIsCollideable() || map.blocks[bottomPlayerEdge / tileSize][(rightPlayerEdge + 1) / tileSize].getIsCollideable())
-		player.forbidGoingRight();
-	else
-		player.allowGoingRight();
-
-	if (map.blocks[(topPlayerEdge - 1) / tileSize][leftPlayerEdge / tileSize].getIsCollideable() || map.blocks[(topPlayerEdge - 1) / tileSize][rightPlayerEdge / tileSize].getIsCollideable())
-		player.fall();
-
-	if (map.blocks[(bottomPlayerEdge + 1) / tileSize][leftPlayerEdge / tileSize].getIsCollideable() || map.blocks[(bottomPlayerEdge + 1) / tileSize][rightPlayerEdge / tileSize].getIsCollideable())
-		player.hitTheGround();
-	else if (player.getIsOnTheGround())
-		player.fall();*/
-//}
-
-
-
-
-
-void Player::ForbidGoingLeft()
-{
-	this->canGoLeft = false;
-}
-
-void Player::ForbidGoingRight()
-{
-	this->canGoRight = false;
-}
-
-void Player::ForbidGoingDown()
-{
-	this->canGoDown = false;
-}
-
-void Player::ForbidGoingUp()
-{
-	this->canGoUp = false;
-}

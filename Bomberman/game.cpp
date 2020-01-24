@@ -17,7 +17,7 @@ Game::Game()
 
 	window.setFramerateLimit(60);
 
-	player1.SetPosition(sf::Vector2f( 80, 80));
+	player1.SetPosition(sf::Vector2f( 64, 64));
 	player2.SetPosition(sf::Vector2f( 870, 605));
 
 	isOver = false;

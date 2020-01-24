@@ -32,17 +32,29 @@ public:
 
 	void GoRight(const sf::Time & deltaTime, Map & map);
 
-	void ForbidGoingLeft();
+	//--
+	void ForbidGoingLeft() { canGoLeft = false; };
 
-	void ForbidGoingRight();
+	void ForbidGoingRight() { canGoRight = false; };
 
-	void ForbidGoingDown();
+	void ForbidGoingDown() { canGoDown = false; };
 
-	void ForbidGoingUp();
+	void ForbidGoingUp() { canGoUp = false; };
+
+	void AllowGoingLeft() { canGoLeft = true; };
+
+	void AllowGoingRight() { canGoRight = true; };
+
+	void AllowGoingDown() { canGoDown = true; };
+
+	void AllowGoingUp() { canGoUp = true; };
+	//--
 
 	void Update(const sf::Time deltaTime);
 
 	void UpdateSprite();
+
+	sf::FloatRect GetCollisionBox() { return collisionBox; };
 
 	void UpdateCollisionBox();
 
@@ -53,9 +65,9 @@ public:
 	//bool IsColidingWithAnything();
 
 
-	//void CheckForCollisions(const sf::Time & deltaTime, Map & map);
+	void CheckForCollisions(const sf::Time & deltaTime, Map & map);
 
-	bool CheckForCollisions(const sf::Time & deltaTime, Map & map);
+	//bool CheckForCollisions(const sf::Time & deltaTime, Map & map);
 
 
 };
