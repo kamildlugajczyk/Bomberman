@@ -15,8 +15,8 @@ Player::Player(bool up, bool down, bool right, bool left)
 	defaultVelocity = { 200.f, 200.f };
 	velocity = defaultVelocity;
 
-	collisionBox.width = 48;
-	collisionBox.height = 48;
+	collisionBox.width = 32;
+	collisionBox.height = 32;
 
 	/*sf::FloatRect helpCollider(sf::Vector2f(this->GetPosition().x, this->GetPosition().y), sf::Vector2f(30, 30));
 	collider = helpCollider;*/
@@ -33,6 +33,9 @@ void Player::MoveWSAD(const sf::Time & deltaTime, Map & map)
 
 	CheckForCollisions(deltaTime, map);
 
+	/*CheckForCollisionsLR(deltaTime, map);
+	CheckForCollisionsUD(deltaTime, map);
+*/
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 		GoUp(deltaTime, map);
@@ -60,6 +63,7 @@ void Player::MoveWSAD(const sf::Time & deltaTime, Map & map)
 		bomb->SetPosition(bombLocation);
 
 		map.blocks[(int)(this->position.y) / 64][(int)(this->position.x) / 64] = bomb;
+		map.blocks[(int)(this->position.y) / 64][(int)(this->position.x) / 64]->type = bombBlock;
 	}
 }
 
@@ -101,7 +105,7 @@ void Player::GoUp(const sf::Time & deltaTime, Map & map)
 {
 	if (canGoUp)
 	{
-		position.y -= velocity.y * deltaTime.asSeconds();
+		position.y -= int(velocity.y * deltaTime.asSeconds());
 		playerState = movingUp;
 
 
@@ -125,7 +129,7 @@ void Player::GoDown(const sf::Time & deltaTime, Map & map)
 {
 	if (canGoDown)
 	{
-		position.y += velocity.y * deltaTime.asSeconds();
+		position.y += int(velocity.y * deltaTime.asSeconds());
 		playerState = movingDown;
 
 
@@ -148,7 +152,7 @@ void Player::GoLeft(const sf::Time & deltaTime, Map & map)
 {
 	if (canGoLeft)
 	{
-		position.x -= velocity.x * deltaTime.asSeconds();
+		position.x -= int(velocity.x * deltaTime.asSeconds());
 		playerState = movingLeft;
 
 		//CheckForCollisions(deltaTime, map);
@@ -175,7 +179,7 @@ void Player::GoRight(const sf::Time & deltaTime, Map & map)
 {
 	if (canGoRight)
 	{
-		position.x += velocity.x * deltaTime.asSeconds();
+		position.x += int(velocity.x * deltaTime.asSeconds());
 		playerState = movingRight;
 
 		//CheckForCollisions(deltaTime, map);
@@ -225,11 +229,6 @@ void Player::UpdateSprite()
 	}
 }
 
-void Player::UpdateCollisionBox()									//zastanowic sie
-{
-	collisionBox.left = position.x - 1;
-	collisionBox.top = position.y - 1;
-}
 
 //bool Player::CheckForCollisions(const sf::Time & deltaTime, Map & map)
 //{
@@ -297,6 +296,15 @@ void Player::UpdateCollisionBox()									//zastanowic sie
 //	return false;
 //}
 
+void Player::UpdateCollisionBox()									//zastanowic sie
+{
+	/*collisionBox.left = position.x + 1;
+	collisionBox.top = position.y + 1;*/
+
+	collisionBox.left = position.x;
+	collisionBox.top = position.y;
+}
+
 void Player::CheckForCollisions(const sf::Time & deltaTime, Map & map)
 {
 	float leftPlayerEdge = this->GetCollisionBox().left;
@@ -304,30 +312,109 @@ void Player::CheckForCollisions(const sf::Time & deltaTime, Map & map)
 	float topPlayerEdge = this->GetCollisionBox().top;
 	float bottomPlayerEdge = this->GetCollisionBox().top + this->GetCollisionBox().height;
 	
-	if (map.blocks[(int)(topPlayerEdge / 64)][(int)((leftPlayerEdge - 1) / 64)]->type != backgroundBlock || map.blocks[(int)(bottomPlayerEdge / 64)][(int)((leftPlayerEdge - 1) / 64)]->type != backgroundBlock)
+	//kolizje z lewej
+	if (map.blocks[(int)(topPlayerEdge / 64)][(int)((leftPlayerEdge - 1) / 64)]->type == solidBlock
+		|| map.blocks[(int)(topPlayerEdge / 64)][(int)((leftPlayerEdge - 1) / 64)]->type == breakableBlock
+		|| map.blocks[(int)(bottomPlayerEdge / 64)][(int)((leftPlayerEdge - 1) / 64)]->type == solidBlock
+		|| map.blocks[(int)(bottomPlayerEdge / 64)][(int)((leftPlayerEdge - 1) / 64)]->type == breakableBlock)
+	{
 		this->ForbidGoingLeft();
+		//position.x += velocity.x * deltaTime.asSeconds();
+		position.x += 1;
+	}
 	else
+	{
 		this->AllowGoingLeft();
+	}
 	
-	if (map.blocks[(int)(topPlayerEdge / 64)][(int)((rightPlayerEdge + 1) / 64)]->type != backgroundBlock || map.blocks[(int)(bottomPlayerEdge / 64)][(int)((rightPlayerEdge + 1) / 64)]->type != backgroundBlock)
+	// kolizje z prawej
+	if (map.blocks[(int)(topPlayerEdge / 64)][(int)((rightPlayerEdge + 1) / 64)]->type == solidBlock
+		|| map.blocks[(int)(topPlayerEdge / 64)][(int)((rightPlayerEdge + 1) / 64)]->type == breakableBlock
+		|| map.blocks[(int)(bottomPlayerEdge / 64)][(int)((rightPlayerEdge + 1) / 64)]->type == solidBlock
+		|| map.blocks[(int)(bottomPlayerEdge / 64)][(int)((rightPlayerEdge + 1) / 64)]->type == breakableBlock)
+	{
 		this->ForbidGoingRight();
+		//position.x -= velocity.x * deltaTime.asSeconds();
+		position.x -= 1;
+	}
 	else
+	{
 		this->AllowGoingRight();
+	}
 
-
-
-	/*if (map.blocks[(int)((leftPlayerEdge - 1) / 64)][(int)(topPlayerEdge / 64)]->type != backgroundBlock || map.blocks[(int)((leftPlayerEdge - 1) / 64)][(int)(bottomPlayerEdge / 64)]->type != backgroundBlock)
-		this->ForbidGoingLeft();
+	// kolizje z gora
+	if (map.blocks[(int)((topPlayerEdge - 1) / 64)][(int)(leftPlayerEdge / 64)]->type == solidBlock
+		|| map.blocks[(int)((topPlayerEdge - 1) / 64)][(int)(leftPlayerEdge / 64)]->type == breakableBlock
+		|| map.blocks[(int)((topPlayerEdge - 1) / 64)][(int)(rightPlayerEdge / 64)]->type == solidBlock
+		|| map.blocks[(int)((topPlayerEdge - 1) / 64)][(int)(rightPlayerEdge / 64)]->type == breakableBlock)
+	{
+		this->ForbidGoingUp();
+		//position.y += velocity.y * deltaTime.asSeconds();
+		position.y += 1;
+	}
 	else
-		this->AllowGoingLeft();
-	if (map.blocks[(int)((rightPlayerEdge + 1) / 64)][(int)(topPlayerEdge / 64)]->type != backgroundBlock || map.blocks[(int)((rightPlayerEdge + 1) / 64)][(int)(bottomPlayerEdge / 64)]->type != backgroundBlock)
-		this->ForbidGoingRight();
+	{
+		this->AllowGoingUp();
+	}
+
+	// kolizje z dolem
+	
+
+	if (map.blocks[(int)((bottomPlayerEdge + 1) / 64)][(int)(leftPlayerEdge / 64)]->type == solidBlock
+		|| map.blocks[(int)((bottomPlayerEdge + 1) / 64)][(int)(leftPlayerEdge / 64)]->type == breakableBlock
+		|| map.blocks[(int)((bottomPlayerEdge + 1) / 64)][(int)(rightPlayerEdge / 64)]->type == solidBlock
+		|| map.blocks[(int)((bottomPlayerEdge + 1) / 64)][(int)(rightPlayerEdge / 64)]->type == breakableBlock)
+	{
+		this->ForbidGoingDown();
+		//position.y -= velocity.y * deltaTime.asSeconds();
+		position.y -= 1;
+	}
 	else
-		this->AllowGoingRight();
-*/
-
-
+	{
+		this->AllowGoingDown();
+	}
 }
+
+//void Player::CheckForCollisionsLR(const sf::Time & deltaTime, Map & map)
+//{
+//	float leftPlayerEdge = this->GetCollisionBox().left;
+//	float rightPlayerEdge = this->GetCollisionBox().left + this->GetCollisionBox().width;
+//	float topPlayerEdge = this->GetCollisionBox().top;
+//	float bottomPlayerEdge = this->GetCollisionBox().top + this->GetCollisionBox().height;
+//
+//	// kolizje z lewej
+//	if (map.blocks[(int)(topPlayerEdge / 64)][(int)((leftPlayerEdge - 1) / 64)]->type != backgroundBlock || map.blocks[(int)(bottomPlayerEdge / 64)][(int)((leftPlayerEdge - 1) / 64)]->type != backgroundBlock)
+//		this->ForbidGoingLeft();
+//	else
+//		this->AllowGoingLeft();
+//	
+//	// kolizje z prawej
+//	if (map.blocks[(int)(topPlayerEdge / 64)][(int)((rightPlayerEdge + 1) / 64)]->type != backgroundBlock || map.blocks[(int)(bottomPlayerEdge / 64)][(int)((rightPlayerEdge + 1) / 64)]->type != backgroundBlock)
+//		this->ForbidGoingRight();
+//	else
+//		this->AllowGoingRight();
+//}
+//
+//void Player::CheckForCollisionsUD(const sf::Time & deltaTime, Map & map)
+//{
+//	float leftPlayerEdge = this->GetCollisionBox().left;
+//	float rightPlayerEdge = this->GetCollisionBox().left + this->GetCollisionBox().width;
+//	float topPlayerEdge = this->GetCollisionBox().top;
+//	float bottomPlayerEdge = this->GetCollisionBox().top + this->GetCollisionBox().height;
+//
+//	// kolizje z gora
+//	if (map.blocks[(int)((topPlayerEdge - 1) / 64)][(int)(leftPlayerEdge / 64)]->type != backgroundBlock || map.blocks[(int)((topPlayerEdge - 1) / 64)][(int)(rightPlayerEdge / 64)]->type != backgroundBlock)
+//		this->ForbidGoingUp();
+//	else
+//		this->AllowGoingUp();
+//
+//	// kolizje z dolem
+//	if (map.blocks[(int)((bottomPlayerEdge + 1) / 64)][(int)(leftPlayerEdge / 64)]->type != backgroundBlock || map.blocks[(int)((bottomPlayerEdge + 1) / 64)][(int)(rightPlayerEdge / 64)]->type != backgroundBlock)
+//		this->ForbidGoingDown();
+//	else
+//		this->AllowGoingDown();
+//}
+
 
 
 

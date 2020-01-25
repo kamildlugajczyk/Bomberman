@@ -67,6 +67,9 @@ public:
 
 	void CheckForCollisions(const sf::Time & deltaTime, Map & map);
 
+	/*void CheckForCollisionsLR(const sf::Time & deltaTime, Map & map);
+	void CheckForCollisionsUD(const sf::Time & deltaTime, Map & map);*/
+
 	//bool CheckForCollisions(const sf::Time & deltaTime, Map & map);
 
 
