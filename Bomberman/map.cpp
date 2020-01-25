@@ -141,34 +141,3 @@ void Map::Draw(sf::RenderWindow & window)
 		for (int k = 0; k < 15; k++)
 			blocks[w][k]->Draw(window);
 }
-
-//bool Map::CheckForCollisions(Player & player)
-//{
-//	for (int w = 0; w < 11; w++)
-//		for (int k = 0; k < 15; k++)
-//		{
-//			if (blocks[w][k]->blockCollider.intersects(player.collider))
-//				return true;
-//		}
-//
-//	return false;
-//}
-
-//std::vector<Block*> Map::GetAllCollidingTiles()
-//{
-//	std::vector<Block*> collidingBlocks;
-//	for(auto * collidingBlocks : )
-//
-//
-//	return collidingBlocks;
-//}
-
-//void Map::CheckForCollisions(Player & player)
-//{
-//	sf::FloatRect collider(sf::Vector2f(player.GetPosition().x - 20, player.GetPosition().y - 20), sf::Vector2f(30, 30));
-//
-//	if ()
-//		player.forbidGoingLeft();
-//	else
-//		player.allowGoingLeft();
-//}

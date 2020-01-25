@@ -21,7 +21,5 @@ public:
 
 	void LoadTexture(const sf::Texture & texture);
 
-	//virtual void UpdateCollisionBox() = 0 ;
-
 	void Draw(sf::RenderWindow & window);
 };

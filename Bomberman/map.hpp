@@ -5,7 +5,6 @@
 #include <SFML/Graphics.hpp>
 
 #include "block.hpp"
-//#include "player.hpp"
 
 class Map
 {
@@ -39,7 +38,4 @@ public:
 
 	void Draw(sf::RenderWindow & window);
 
-	//bool CheckForCollisions(Player & player);
-
-	//bool IsCollidingWithAnything();
 };
