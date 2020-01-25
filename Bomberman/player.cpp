@@ -33,10 +33,6 @@ void Player::MoveWSAD(const sf::Time & deltaTime, Map & map)
 
 	CheckForCollisions(deltaTime, map);
 
-	/*CheckForCollisionsLR(deltaTime, map);
-	CheckForCollisionsUD(deltaTime, map);
-*/
-
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 		GoUp(deltaTime, map);
 
@@ -71,6 +67,7 @@ void Player::MoveArrows(const sf::Time & deltaTime, Map & map)
 {
 	timeSinceBomb -= deltaTime.asSeconds();
 
+	CheckForCollisions(deltaTime, map);
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 		GoUp(deltaTime, map);
@@ -107,21 +104,6 @@ void Player::GoUp(const sf::Time & deltaTime, Map & map)
 	{
 		position.y -= int(velocity.y * deltaTime.asSeconds());
 		playerState = movingUp;
-
-
-
-
-		/*if(map.blocks[(int)(this->position.y) / 64][(int)(this->position.x) / 64]->blockCollider.intersects(collider))*/
-
-
-		//CheckForCollisions(deltaTime, map);
-
-		/*if (this->CheckForCollisions(deltaTime, map))
-		{
-			std::cout << " Kolizja z gory \n";
-			position.y += velocity.y * deltaTime.asSeconds();
-
-		}*/
 	}
 }
 
@@ -131,20 +113,6 @@ void Player::GoDown(const sf::Time & deltaTime, Map & map)
 	{
 		position.y += int(velocity.y * deltaTime.asSeconds());
 		playerState = movingDown;
-
-
-
-		//sf::Vector2f helpPosition = position;
-
-		//CheckForCollisions(deltaTime, map);
-
-		//if (this->CheckForCollisions(deltaTime, map))
-		//{
-		//	std::cout << " Kolizja z dolu \n";
-		//	position.y -= velocity.y * deltaTime.asSeconds();
-		//	//position = helpPosition;
-
-		//}
 	}
 }
 
@@ -154,23 +122,6 @@ void Player::GoLeft(const sf::Time & deltaTime, Map & map)
 	{
 		position.x -= int(velocity.x * deltaTime.asSeconds());
 		playerState = movingLeft;
-
-		//CheckForCollisions(deltaTime, map);
-
-
-		//sf::Vector2f helpPosition = position;
-		//
-		//CheckForCollisions(deltaTime, map);
-
-		//if (this->CheckForCollisions(deltaTime, map))
-		//{
-		//	std::cout << " Kolizja z lewej \n";
-
-		//	position.x += velocity.x * deltaTime.asSeconds();
-		//	//this->SetPosition(sf::Vector2f(position.x + velocity.x * deltaTime.asSeconds(), position.y));
-		//	//position = helpPosition;
-
-		//}
 	}
 }
 
@@ -181,34 +132,14 @@ void Player::GoRight(const sf::Time & deltaTime, Map & map)
 	{
 		position.x += int(velocity.x * deltaTime.asSeconds());
 		playerState = movingRight;
-
-		//CheckForCollisions(deltaTime, map);
-
-
-		//sf::Vector2f helpPosition = position;
-		//CheckForCollisions(deltaTime, map);
-
-		//if (this->CheckForCollisions(deltaTime, map))
-		//{
-		//	//std::cout << " Kolizja z prawej \n";
-		//	position.x -= velocity.x * deltaTime.asSeconds();
-		//	//this->SetPosition(sf::Vector2f(position.x - velocity.x * deltaTime.asSeconds(), position.y));
-
-		//	//position = helpPosition;
-		//}
-		////this->SetPosition(position);
 	}
 }
 
 void Player::Update(const sf::Time deltaTime)
 {
 	//UpdateSprite();
+
 	UpdateCollisionBox();
-
-	//sf::FloatRect helpCollider(sf::Vector2f(this->GetPosition().y, this->GetPosition().x), sf::Vector2f(48, 48));
-	//sf::FloatRect helpCollider(sf::Vector2f(this->GetPosition().y - 16 , this->GetPosition().x - 16), sf::Vector2f(32, 32));
-
-	//collider = helpCollider;
 
 	sprite.setPosition(position);
 }
@@ -229,78 +160,8 @@ void Player::UpdateSprite()
 	}
 }
 
-
-//bool Player::CheckForCollisions(const sf::Time & deltaTime, Map & map)
-//{
-//	for (int w = 0; w < 11; w++)
-//		for (int k = 0; k < 15; k++)
-//		{
-//			nextPosition = collider;
-//			nextPosition.left +=  velocity.x * deltaTime.asSeconds();
-//			nextPosition.top +=  velocity.y * deltaTime.asSeconds();
-//
-//			if ((map.blocks[w][k]->type != backgroundBlock) && (map.blocks[w][k]->blockCollider.intersects(nextPosition)))
-//			{
-//				std::cout << map.blocks[w][k] << " intersects on " << w << ", " << k << std::endl;
-//				return true;
-//			}
-//		}
-//	return false;
-//}
-
-//bool Player::CheckForCollisions(const sf::Time & deltaTime, Map & map)
-//{
-//	for (int w = 0; w < 11; w++)
-//		for (int k = 0; k < 15; k++)
-//		{
-//			nextPosition = collider;
-//			nextPosition.left +=  velocity.x * deltaTime.asSeconds();
-//			nextPosition.top +=  velocity.y * deltaTime.asSeconds();
-//
-//			if ((map.blocks[w][k]->type != backgroundBlock) && (map.blocks[w][k]->blockCollider.intersects(nextPosition)))
-//				return true;
-//		}
-//	return false;
-//}
-
-
-//bool Player::CheckForCollisions(const sf::Time & deltaTime, Map & map)
-//{
-//	for (int w = 1; w < 10; w++)
-//		for (int k = 1; k < 14; k++)
-//		{
-//			if (map.blocks[(int)(this->position.y) / 64][(int)(this->position.x) / 64]->blockCollider.intersects(collider))
-//
-//
-//			nextPosition = collider;
-//			nextPosition.left += velocity.x * deltaTime.asSeconds();
-//			nextPosition.top += velocity.y * deltaTime.asSeconds();
-//
-//			if ((map.blocks[w][k]->type != backgroundBlock) && (map.blocks[w][k]->blockCollider.intersects(nextPosition)))
-//				return true;
-//		}
-//	return false;
-//}
-
-//bool Player::CheckForCollisions(Map & map)
-//{
-//	for (int w = 0; w < 11; w++)
-//		for (int k = 0; k < 15; k++)
-//		{
-//			if ((map.blocks[w][k]->type != backgroundBlock) && (map.blocks[w][k]->blockCollider.intersects(collider)))
-//			{
-//
-//				return true;
-//			}
-//		}
-//	return false;
-//}
-
 void Player::UpdateCollisionBox()									//zastanowic sie
 {
-	/*collisionBox.left = position.x + 1;
-	collisionBox.top = position.y + 1;*/
-
 	collisionBox.left = position.x;
 	collisionBox.top = position.y;
 }
@@ -319,13 +180,10 @@ void Player::CheckForCollisions(const sf::Time & deltaTime, Map & map)
 		|| map.blocks[(int)(bottomPlayerEdge / 64)][(int)((leftPlayerEdge - 1) / 64)]->type == breakableBlock)
 	{
 		this->ForbidGoingLeft();
-		//position.x += velocity.x * deltaTime.asSeconds();
 		position.x += 1;
 	}
 	else
-	{
 		this->AllowGoingLeft();
-	}
 	
 	// kolizje z prawej
 	if (map.blocks[(int)(topPlayerEdge / 64)][(int)((rightPlayerEdge + 1) / 64)]->type == solidBlock
@@ -334,13 +192,10 @@ void Player::CheckForCollisions(const sf::Time & deltaTime, Map & map)
 		|| map.blocks[(int)(bottomPlayerEdge / 64)][(int)((rightPlayerEdge + 1) / 64)]->type == breakableBlock)
 	{
 		this->ForbidGoingRight();
-		//position.x -= velocity.x * deltaTime.asSeconds();
 		position.x -= 1;
 	}
 	else
-	{
 		this->AllowGoingRight();
-	}
 
 	// kolizje z gora
 	if (map.blocks[(int)((topPlayerEdge - 1) / 64)][(int)(leftPlayerEdge / 64)]->type == solidBlock
@@ -349,136 +204,20 @@ void Player::CheckForCollisions(const sf::Time & deltaTime, Map & map)
 		|| map.blocks[(int)((topPlayerEdge - 1) / 64)][(int)(rightPlayerEdge / 64)]->type == breakableBlock)
 	{
 		this->ForbidGoingUp();
-		//position.y += velocity.y * deltaTime.asSeconds();
 		position.y += 1;
 	}
 	else
-	{
 		this->AllowGoingUp();
-	}
 
 	// kolizje z dolem
-	
-
 	if (map.blocks[(int)((bottomPlayerEdge + 1) / 64)][(int)(leftPlayerEdge / 64)]->type == solidBlock
 		|| map.blocks[(int)((bottomPlayerEdge + 1) / 64)][(int)(leftPlayerEdge / 64)]->type == breakableBlock
 		|| map.blocks[(int)((bottomPlayerEdge + 1) / 64)][(int)(rightPlayerEdge / 64)]->type == solidBlock
 		|| map.blocks[(int)((bottomPlayerEdge + 1) / 64)][(int)(rightPlayerEdge / 64)]->type == breakableBlock)
 	{
 		this->ForbidGoingDown();
-		//position.y -= velocity.y * deltaTime.asSeconds();
 		position.y -= 1;
 	}
 	else
-	{
 		this->AllowGoingDown();
-	}
 }
-
-//void Player::CheckForCollisionsLR(const sf::Time & deltaTime, Map & map)
-//{
-//	float leftPlayerEdge = this->GetCollisionBox().left;
-//	float rightPlayerEdge = this->GetCollisionBox().left + this->GetCollisionBox().width;
-//	float topPlayerEdge = this->GetCollisionBox().top;
-//	float bottomPlayerEdge = this->GetCollisionBox().top + this->GetCollisionBox().height;
-//
-//	// kolizje z lewej
-//	if (map.blocks[(int)(topPlayerEdge / 64)][(int)((leftPlayerEdge - 1) / 64)]->type != backgroundBlock || map.blocks[(int)(bottomPlayerEdge / 64)][(int)((leftPlayerEdge - 1) / 64)]->type != backgroundBlock)
-//		this->ForbidGoingLeft();
-//	else
-//		this->AllowGoingLeft();
-//	
-//	// kolizje z prawej
-//	if (map.blocks[(int)(topPlayerEdge / 64)][(int)((rightPlayerEdge + 1) / 64)]->type != backgroundBlock || map.blocks[(int)(bottomPlayerEdge / 64)][(int)((rightPlayerEdge + 1) / 64)]->type != backgroundBlock)
-//		this->ForbidGoingRight();
-//	else
-//		this->AllowGoingRight();
-//}
-//
-//void Player::CheckForCollisionsUD(const sf::Time & deltaTime, Map & map)
-//{
-//	float leftPlayerEdge = this->GetCollisionBox().left;
-//	float rightPlayerEdge = this->GetCollisionBox().left + this->GetCollisionBox().width;
-//	float topPlayerEdge = this->GetCollisionBox().top;
-//	float bottomPlayerEdge = this->GetCollisionBox().top + this->GetCollisionBox().height;
-//
-//	// kolizje z gora
-//	if (map.blocks[(int)((topPlayerEdge - 1) / 64)][(int)(leftPlayerEdge / 64)]->type != backgroundBlock || map.blocks[(int)((topPlayerEdge - 1) / 64)][(int)(rightPlayerEdge / 64)]->type != backgroundBlock)
-//		this->ForbidGoingUp();
-//	else
-//		this->AllowGoingUp();
-//
-//	// kolizje z dolem
-//	if (map.blocks[(int)((bottomPlayerEdge + 1) / 64)][(int)(leftPlayerEdge / 64)]->type != backgroundBlock || map.blocks[(int)((bottomPlayerEdge + 1) / 64)][(int)(rightPlayerEdge / 64)]->type != backgroundBlock)
-//		this->ForbidGoingDown();
-//	else
-//		this->AllowGoingDown();
-//}
-
-
-
-
-
-
-
-
-//for (int w = 0; w < 11; w++)
-	//	for (int k = 0; k < 15; k++)
-	//	{
-	//		nextPosition = collider;
-	//		nextPosition.left +=  velocity.x * deltaTime.asSeconds();
-	//		nextPosition.top +=  velocity.y * deltaTime.asSeconds();
-
-	//		if ((map.blocks[w][k]->type != backgroundBlock) && (map.blocks[w][k]->blockCollider.intersects(nextPosition)))
-	//		{
-	//			// dol
-	//			if (collider.left < map.blocks[w][k]->blockCollider.left
-	//				&& collider.left + collider.width < map.blocks[w][k]->blockCollider.left + map.blocks[w][k]->blockCollider.width
-	//				&& collider.top < map.blocks[w][k]->blockCollider.top + map.blocks[w][k]->blockCollider.height
-	//				&& collider.top + collider.height > map.blocks[w][k]->blockCollider.top)
-	//			{
-	//				//velocity.x = 0.f;
-	//				//this->SetPosition(sf::Vector2f(collider.left, map.blocks[w][k]->blockCollider.top - collider.height));
-	//				//this->SetPosition(sf::Vector2f(map.blocks[w][k]->blockCollider.top - collider.height, collider.left));
-
-	//				this->SetPosition(sf::Vector2f(map.blocks[w][k]->blockCollider.top + map.blocks[w][k]->blockCollider.height, collider.left));
-
-	//			}
-
-	//			//gora
-	//			else if (collider.top > map.blocks[w][k]->blockCollider.top
-	//				&& collider.top + collider.height > map.blocks[w][k]->blockCollider.top + map.blocks[w][k]->blockCollider.height
-	//				&& collider.left < map.blocks[w][k]->blockCollider.left + map.blocks[w][k]->blockCollider.width
-	//				&& collider.left + collider.width > map.blocks[w][k]->blockCollider.left)
-	//			{
-	//				//velocity.y = 0.f;
-	//				//this->SetPosition(sf::Vector2f(collider.left, map.blocks[w][k]->blockCollider.top + map.blocks[w][k]->blockCollider.height));
-	//				//this->SetPosition(sf::Vector2f(map.blocks[w][k]->blockCollider.top + map.blocks[w][k]->blockCollider.height, collider.left));
-
-	//				this->SetPosition(sf::Vector2f(map.blocks[w][k]->blockCollider.top - collider.height, collider.left));
-
-	//			}
-
-	//			//prawo
-	//			if (collider.left < map.blocks[w][k]->blockCollider.left
-	//				&& collider.left + collider.width < map.blocks[w][k]->blockCollider.left + map.blocks[w][k]->blockCollider.width
-	//				&& collider.top < map.blocks[w][k]->blockCollider.top + map.blocks[w][k]->blockCollider.height
-	//				&& collider.top + collider.height > map.blocks[w][k]->blockCollider.top)
-	//			{
-	//				//velocity.x = 0.f;
-	//				//this->SetPosition(sf::Vector2f(map.blocks[w][k]->blockCollider.left - collider.width, collider.top));
-	//				this->SetPosition(sf::Vector2f(collider.top, map.blocks[w][k]->blockCollider.left - collider.width));
-	//			}
-
-	//			//lewo
-	//			else if (collider.left > map.blocks[w][k]->blockCollider.left
-	//				&& collider.left + collider.width > map.blocks[w][k]->blockCollider.left + map.blocks[w][k]->blockCollider.width
-	//				&& collider.top < map.blocks[w][k]->blockCollider.top + map.blocks[w][k]->blockCollider.height
-	//				&& collider.top + collider.height > map.blocks[w][k]->blockCollider.top)
-	//			{
-	//				//velocity.x = 0.f;
-	//				//this->SetPosition(sf::Vector2f(map.blocks[w][k]->blockCollider.left + map.blocks[w][k]->blockCollider.width, collider.top));
-	//				this->SetPosition(sf::Vector2f(collider.top, map.blocks[w][k]->blockCollider.left + map.blocks[w][k]->blockCollider.width));
-	//			}
-	//		}
-	//	}
