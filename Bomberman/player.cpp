@@ -21,7 +21,7 @@ Player::Player(bool up, bool down, bool right, bool left)
 
 	playerState = stand;
 
-	//sprite.setOrigin(24, 24);
+	sprite.setOrigin(collisionBox.width / 2, collisionBox.height / 2);
 	//sprite.setOrigin(16, 16);
 }
 
@@ -135,7 +135,7 @@ void Player::GoRight(const sf::Time & deltaTime, Map & map)
 
 void Player::Update(const sf::Time deltaTime)
 {
-	//UpdateSprite();
+	UpdateSprite();
 
 	UpdateCollisionBox();
 
@@ -166,10 +166,12 @@ void Player::UpdateCollisionBox()									//zastanowic sie
 
 void Player::CheckForCollisions(const sf::Time & deltaTime, Map & map)
 {
-	float leftPlayerEdge = this->GetCollisionBox().left;
-	float rightPlayerEdge = this->GetCollisionBox().left + this->GetCollisionBox().width;
-	float topPlayerEdge = this->GetCollisionBox().top;
-	float bottomPlayerEdge = this->GetCollisionBox().top + this->GetCollisionBox().height;
+	float leftPlayerEdge = this->GetCollisionBox().left - collisionBox.width / 2;
+	//float rightPlayerEdge = this->GetCollisionBox().left + this->GetCollisionBox().width + 24;
+	float rightPlayerEdge = this->GetCollisionBox().left + collisionBox.width / 2;
+	float topPlayerEdge = this->GetCollisionBox().top - collisionBox.height / 2;
+	//float bottomPlayerEdge = this->GetCollisionBox().top + this->GetCollisionBox().height + 24;
+	float bottomPlayerEdge = this->GetCollisionBox().top + collisionBox.height / 2;
 	
 	/*std::cout << "\n\n\nTyp: " << map.blocks[(int)(this->GetPosition().y / 64)][(int)((this->GetPosition().x) / 64)]->type << std::endl;
 	std::cout << "Pozycja y: " << (int)(this->GetPosition().y / 64) << std::endl;
