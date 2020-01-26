@@ -11,6 +11,11 @@ Explosion::Explosion() : flameTime(1.f)
 		getchar();
 	}
 
+	collisionBox.top = this->GetPosition().y;
+	collisionBox.left = this->GetPosition().x;
+	collisionBox.width = 64;
+	collisionBox.height = 64;
+
 	sprite.setOrigin(-10, -10);
 }
 

@@ -7,6 +7,7 @@
 #include "map.hpp"
 #include "enum.hpp"
 
+#include "windows.h"
 
 
 Player::Player(bool up, bool down, bool right, bool left)
@@ -15,15 +16,12 @@ Player::Player(bool up, bool down, bool right, bool left)
 	defaultVelocity = { 200.f, 200.f };
 	velocity = defaultVelocity;
 
-	collisionBox.width = 32;
-	collisionBox.height = 32;
-
-	/*sf::FloatRect helpCollider(sf::Vector2f(this->GetPosition().x, this->GetPosition().y), sf::Vector2f(30, 30));
-	collider = helpCollider;*/
+	collisionBox.width = 48;
+	collisionBox.height = 48;
 
 	playerState = stand;
 
-	//sprite.setOrigin(28, 22);
+	//sprite.setOrigin(24, 24);
 	//sprite.setOrigin(16, 16);
 }
 
@@ -173,6 +171,28 @@ void Player::CheckForCollisions(const sf::Time & deltaTime, Map & map)
 	float topPlayerEdge = this->GetCollisionBox().top;
 	float bottomPlayerEdge = this->GetCollisionBox().top + this->GetCollisionBox().height;
 	
+	/*std::cout << "\n\n\nTyp: " << map.blocks[(int)(this->GetPosition().y / 64)][(int)((this->GetPosition().x) / 64)]->type << std::endl;
+	std::cout << "Pozycja y: " << (int)(this->GetPosition().y / 64) << std::endl;
+	std::cout << "Pozycja x: " << (int)(this->GetPosition().x / 64) << std::endl;
+	std::cout << "CollisionBox.left: " << map.blocks[(int)(this->GetPosition().y / 64)][(int)((this->GetPosition().x) / 64)]->GetCollisionBox().left << std::endl;
+	std::cout << "CollisionBox.top: " << map.blocks[(int)(this->GetPosition().y / 64)][(int)((this->GetPosition().x) / 64)]->GetCollisionBox().top << std::endl;
+	std::cout << "CollisionBox.width: " << map.blocks[(int)(this->GetPosition().y / 64)][(int)((this->GetPosition().x) / 64)]->GetCollisionBox().width << std::endl;
+	std::cout << "CollisionBox.height: " << map.blocks[(int)(this->GetPosition().y / 64)][(int)((this->GetPosition().x) / 64)]->GetCollisionBox().height << std::endl;
+	std::cout << "\nGracz.left: " << leftPlayerEdge << std::endl;
+	std::cout << "Gracz.top: " << topPlayerEdge << std::endl;
+	std::cout << "Gracz.right: " << rightPlayerEdge << std::endl;
+	std::cout << "Gracz.bottom: " << bottomPlayerEdge << std::endl;*/
+
+	sf::FloatRect player(sf::Vector2f(leftPlayerEdge / 64, topPlayerEdge / 64), sf::Vector2f(rightPlayerEdge / 64, bottomPlayerEdge / 64));
+
+	if (map.blocks[(int)(this->GetPosition().y / 64)][(int)((this->GetPosition().x) / 64)]->type == explosionBlock
+		&& map.blocks[(int)(this->GetPosition().y / 64)][(int)((this->GetPosition().x) / 64)]->GetCollisionBox().intersects(player))
+	{
+		std::cout << " YOU ARE DEAD! \n";
+		system("cls");
+	}
+
+
 	//kolizje z lewej
 	if (map.blocks[(int)(topPlayerEdge / 64)][(int)((leftPlayerEdge - 1) / 64)]->type == solidBlock
 		|| map.blocks[(int)(topPlayerEdge / 64)][(int)((leftPlayerEdge - 1) / 64)]->type == breakableBlock
@@ -221,3 +241,6 @@ void Player::CheckForCollisions(const sf::Time & deltaTime, Map & map)
 	else
 		this->AllowGoingDown();
 }
+
+
+

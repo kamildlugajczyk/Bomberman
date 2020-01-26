@@ -59,4 +59,11 @@ public:
 	void UpdateCollisionBox();
 
 	void CheckForCollisions(const sf::Time & deltaTime, Map & map);
+
+	//-------------
+	bool killed = false;
+
+	bool IsKilled() { return killed; };
+
+	void Kill() { killed = true; };
 };
