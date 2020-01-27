@@ -8,9 +8,10 @@
 
 class BreakableWall : public Wall
 {
-	//int type = breakableBlock;
-public:
 	sf::Texture breakable_wall;
+public:
 
 	BreakableWall();
+
+	virtual void SetUp() override;
 };

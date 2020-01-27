@@ -8,11 +8,12 @@
 class Bomb : public Block
 {
 	float explodeTime;
+	sf::Texture bombTexture;
 
 public:
-	sf::Texture bombTexture;
 
 	Bomb();
 
 	void Update (const sf::Time deltaTime) override;
+	virtual void SetUp() override;
 };

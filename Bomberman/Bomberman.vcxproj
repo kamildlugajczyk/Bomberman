@@ -127,6 +127,7 @@
     <ClCompile Include="block.cpp" />
     <ClCompile Include="bomb.cpp" />
     <ClCompile Include="breakable_wall.cpp" />
+    <ClCompile Include="end_game_screen.cpp" />
     <ClCompile Include="explosion.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="graphic_object.cpp" />
@@ -142,6 +143,7 @@
     <ClInclude Include="block.hpp" />
     <ClInclude Include="bomb.hpp" />
     <ClInclude Include="breakable_wall.hpp" />
+    <ClInclude Include="end_game_screen.hpp" />
     <ClInclude Include="enum.hpp" />
     <ClInclude Include="explosion.hpp" />
     <ClInclude Include="game.hpp" />

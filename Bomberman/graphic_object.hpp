@@ -11,13 +11,11 @@ protected:
 	sf::Sprite sprite;
 
 public:
-	/* virtual */ sf::Vector2f GetPosition();
+	 sf::Vector2f GetPosition();
 
 	void SetPosition(const sf::Vector2f & position);
 
 	sf::FloatRect GetCollisionBox();
-
-	void SetTexture(sf::IntRect & dimensions);
 
 	void LoadTexture(const sf::Texture & texture);
 

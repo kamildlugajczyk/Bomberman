@@ -1,0 +1,5 @@
+
+ 27.1.2020		2:58:20
+	Player 1 wins!
+	 -Player 1 planted 8 bomb(s)
+	 -Player 2 planted 6 bomb(s)

@@ -11,6 +11,9 @@ SolidWall::SolidWall()
 		std::cout << "Load failed! " << std::endl;
 		getchar();
 	}
+}
 
-	
+void SolidWall::SetUp()
+{
+	LoadTexture(solid_texture);
 }

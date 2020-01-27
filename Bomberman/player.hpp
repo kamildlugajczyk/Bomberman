@@ -13,12 +13,14 @@ class Player : public GraphicObject
 	sf::Vector2f velocity;
 	sf::Vector2f defaultVelocity;
 	States playerState;
-
+	std::string name;
 	bool canGoUp, canGoDown, canGoLeft, canGoRight;
 	float timeSinceBomb, bombCooldown;
 
 public:
-	Player(bool up, bool down, bool right, bool left);
+	int bombPlaced;
+
+	Player(std::string name);
 
 	void MoveWSAD(const sf::Time & deltaTime, Map & map);
 
@@ -48,6 +50,8 @@ public:
 	void AllowGoingDown() { canGoDown = true; };
 
 	void AllowGoingUp() { canGoUp = true; };
+
+	void ForbidMove();
 	//--
 
 	void Update(const sf::Time deltaTime);
@@ -66,4 +70,6 @@ public:
 	bool IsKilled() { return killed; };
 
 	void Kill() { killed = true; };
+	//-----------------
+	void SaveToFile(bool param);
 };

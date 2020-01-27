@@ -10,7 +10,9 @@ Background::Background()
 		std::cout << "Load failed! " << std::endl;
 		getchar();
 	}
+}
 
-	collisionBox.width = 64;
-	collisionBox.height = 64;
+void Background::SetUp()
+{
+	LoadTexture(backgroundTexture);
 }

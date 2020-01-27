@@ -9,27 +9,17 @@
 class Block : public GraphicObject
 {
 
-	//sf::Sprite block_sprite;
-
-	/*bool isCollideable; 
-	bool isInjurious; */
-
 public:
 	int type;
-
 	bool destroyed = false;
-
-	virtual void Update(const sf::Time deltaTime);
-
-	bool IsDestroyed() { return destroyed; };
-
-	void Destroy() { destroyed = true; };
-
 	bool exploded = false;
 
-	bool IsExploded() { return exploded; };
+	virtual void Update(const sf::Time deltaTime);
+	virtual void SetUp() = 0;
 
 	void Explode() { exploded = true; };
+	bool IsDestroyed() { return destroyed; };
 
-	sf::FloatRect blockCollider;
+	bool IsExploded() { return exploded; };
+	void Destroy() { destroyed = true; };
 };

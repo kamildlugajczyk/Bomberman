@@ -25,7 +25,10 @@ void Explosion::Update(const sf::Time deltaTime)
 
 	flameTime -= deltaTime.asSeconds();
 	if (flameTime <= 0)
-	{
 		this->Explode();
-	}
+}
+
+void Explosion::SetUp()
+{
+	LoadTexture(explosionTexture);
 }

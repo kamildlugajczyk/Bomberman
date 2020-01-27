@@ -18,11 +18,6 @@ sf::FloatRect GraphicObject::GetCollisionBox()
 	return this->collisionBox;
 }
 
-void GraphicObject::SetTexture(sf::IntRect & dimensions)
-{
-	sprite.setTextureRect(dimensions);
-}
-
 void GraphicObject::LoadTexture(const sf::Texture & texture)
 {
 	sprite.setTexture(texture);

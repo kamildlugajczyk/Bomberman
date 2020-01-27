@@ -7,9 +7,11 @@
 
 class Background : public Wall
 {
-
-public:
 	sf::Texture backgroundTexture;
 
+public:
+
 	Background();
+
+	virtual void SetUp() override;
 };

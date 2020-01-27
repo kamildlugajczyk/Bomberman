@@ -21,13 +21,11 @@ void Bomb::Update(const sf::Time deltaTime)
 
 	explodeTime -= deltaTime.asSeconds();
 	if (explodeTime <= 0)
-	{
 		this->Destroy();
+}
 
-		/*Explosion * explosion1 = new Explosion();
-		explosion1->SetPosition(this->position);
-		explosion1->LoadTexture(explosion1->explosionTexture);
-		explosion1->Update(deltaTime);*/
-	}
+void Bomb::SetUp()
+{
+	LoadTexture(bombTexture);
 }
 

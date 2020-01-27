@@ -1,5 +1,7 @@
 #include <iostream>
 #include <cmath>
+#include <fstream>
+#include <ctime>
 #include <SFML/Graphics.hpp>
 
 #include "player.hpp"
@@ -10,19 +12,15 @@
 #include "windows.h"
 
 
-Player::Player(bool up, bool down, bool right, bool left)
-	: canGoUp(up), canGoDown(down), canGoRight(right), canGoLeft(left), timeSinceBomb(0.f), bombCooldown(2.f)
+Player::Player(std::string arg_name)
+	: bombCooldown(2.f), defaultVelocity(200.f, 200.f), playerState(stand), name(arg_name), bombPlaced(0)
 {
-	defaultVelocity = { 200.f, 200.f };
 	velocity = defaultVelocity;
 
 	collisionBox.width = 48;
 	collisionBox.height = 48;
 
-	playerState = stand;
-
 	sprite.setOrigin(collisionBox.width / 2, collisionBox.height / 2);
-	//sprite.setOrigin(16, 16);
 }
 
 void Player::MoveWSAD(const sf::Time & deltaTime, Map & map)
@@ -48,7 +46,8 @@ void Player::MoveWSAD(const sf::Time & deltaTime, Map & map)
 		timeSinceBomb = bombCooldown;
 
 		Bomb * bomb = new Bomb();
-		bomb->LoadTexture(bomb->bombTexture);
+		bomb->SetUp();
+		this->bombPlaced++;
 
 		sf::Vector2f bombLocation = this->GetPosition();									// robi zeby bomba  
 		bombLocation.x = ((int)bombLocation.x / 64) * 64;									// pojawila sie dokladnie
@@ -84,7 +83,8 @@ void Player::MoveArrows(const sf::Time & deltaTime, Map & map)
 		timeSinceBomb = bombCooldown;
 
 		Bomb * bomb = new Bomb();
-		bomb->LoadTexture(bomb->bombTexture);
+		bomb->SetUp();
+		this->bombPlaced++;
 
 		sf::Vector2f bombLocation = this->GetPosition();									// robi zeby bomba  
 		bombLocation.x = ((int)bombLocation.x / 64) * 64;									// pojawila sie dokladnie
@@ -133,6 +133,14 @@ void Player::GoRight(const sf::Time & deltaTime, Map & map)
 	}
 }
 
+void Player::ForbidMove()
+{
+	canGoDown = false;
+	canGoUp = false;
+	canGoLeft = false;
+	canGoRight = false;
+}
+
 void Player::Update(const sf::Time deltaTime)
 {
 	UpdateSprite();
@@ -158,7 +166,7 @@ void Player::UpdateSprite()
 	}
 }
 
-void Player::UpdateCollisionBox()									//zastanowic sie
+void Player::UpdateCollisionBox()		
 {
 	collisionBox.left = position.x;
 	collisionBox.top = position.y;
@@ -167,33 +175,17 @@ void Player::UpdateCollisionBox()									//zastanowic sie
 void Player::CheckForCollisions(const sf::Time & deltaTime, Map & map)
 {
 	float leftPlayerEdge = this->GetCollisionBox().left - collisionBox.width / 2;
-	//float rightPlayerEdge = this->GetCollisionBox().left + this->GetCollisionBox().width + 24;
 	float rightPlayerEdge = this->GetCollisionBox().left + collisionBox.width / 2;
 	float topPlayerEdge = this->GetCollisionBox().top - collisionBox.height / 2;
-	//float bottomPlayerEdge = this->GetCollisionBox().top + this->GetCollisionBox().height + 24;
 	float bottomPlayerEdge = this->GetCollisionBox().top + collisionBox.height / 2;
-	
-	/*std::cout << "\n\n\nTyp: " << map.blocks[(int)(this->GetPosition().y / 64)][(int)((this->GetPosition().x) / 64)]->type << std::endl;
-	std::cout << "Pozycja y: " << (int)(this->GetPosition().y / 64) << std::endl;
-	std::cout << "Pozycja x: " << (int)(this->GetPosition().x / 64) << std::endl;
-	std::cout << "CollisionBox.left: " << map.blocks[(int)(this->GetPosition().y / 64)][(int)((this->GetPosition().x) / 64)]->GetCollisionBox().left << std::endl;
-	std::cout << "CollisionBox.top: " << map.blocks[(int)(this->GetPosition().y / 64)][(int)((this->GetPosition().x) / 64)]->GetCollisionBox().top << std::endl;
-	std::cout << "CollisionBox.width: " << map.blocks[(int)(this->GetPosition().y / 64)][(int)((this->GetPosition().x) / 64)]->GetCollisionBox().width << std::endl;
-	std::cout << "CollisionBox.height: " << map.blocks[(int)(this->GetPosition().y / 64)][(int)((this->GetPosition().x) / 64)]->GetCollisionBox().height << std::endl;
-	std::cout << "\nGracz.left: " << leftPlayerEdge << std::endl;
-	std::cout << "Gracz.top: " << topPlayerEdge << std::endl;
-	std::cout << "Gracz.right: " << rightPlayerEdge << std::endl;
-	std::cout << "Gracz.bottom: " << bottomPlayerEdge << std::endl;*/
 
-	sf::FloatRect player(sf::Vector2f(leftPlayerEdge / 64, topPlayerEdge / 64), sf::Vector2f(rightPlayerEdge / 64, bottomPlayerEdge / 64));
+	sf::FloatRect playerCheck(sf::Vector2f(leftPlayerEdge / 64, topPlayerEdge / 64), sf::Vector2f(rightPlayerEdge / 64, bottomPlayerEdge / 64));
 
 	if (map.blocks[(int)(this->GetPosition().y / 64)][(int)((this->GetPosition().x) / 64)]->type == explosionBlock
-		&& map.blocks[(int)(this->GetPosition().y / 64)][(int)((this->GetPosition().x) / 64)]->GetCollisionBox().intersects(player))
+		&& map.blocks[(int)(this->GetPosition().y / 64)][(int)((this->GetPosition().x) / 64)]->GetCollisionBox().intersects(playerCheck))
 	{
-		std::cout << " YOU ARE DEAD! \n";
-		system("cls");
+		this->Kill();
 	}
-
 
 	//kolizje z lewej
 	if (map.blocks[(int)(topPlayerEdge / 64)][(int)((leftPlayerEdge - 1) / 64)]->type == solidBlock
@@ -242,6 +234,30 @@ void Player::CheckForCollisions(const sf::Time & deltaTime, Map & map)
 	}
 	else
 		this->AllowGoingDown();
+}
+
+void Player::SaveToFile(bool param)
+{
+	std::ofstream outputFile;
+
+	outputFile.open("res/stats/statistics.txt", std::ios_base::app);
+
+	time_t rawtime;
+	struct tm timeinfo;
+	time(&rawtime);
+	localtime_s(&timeinfo, &rawtime);
+
+	if (param)
+	{
+		outputFile << "\n " << timeinfo.tm_mday << '.' << (timeinfo.tm_mon + 1) << '.' << (timeinfo.tm_year + 1900) << "\t\t"
+			 << timeinfo.tm_hour << ":" << timeinfo.tm_min << ":" << timeinfo.tm_sec << "\n";
+
+		outputFile << "\t" << this->name << " wins!\n";
+	}
+
+	outputFile << "\t -" << this->name << " planted " << this->bombPlaced << " bomb(s)\n";
+	
+
 }
 
 

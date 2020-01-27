@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <vector>
+#include <fstream>
 #include <SFML/Graphics.hpp>
 
 #include "block.hpp"
@@ -10,7 +11,7 @@ class Map
 {
 	sf::Texture textureSet;
 
-	unsigned int gameMap[11][15] = 
+	unsigned int gameMap[11][15];/* =
 	{
 		{ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 },
 		{ 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
@@ -23,7 +24,7 @@ class Map
 		{ 2, 0, 2, 0, 2, 0, 2, 1, 2, 0, 2, 0, 2, 0, 2 },
 		{ 2, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2 },
 		{ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 }
-	};
+	};*/
 
 public:
 	int tileSize;
@@ -37,5 +38,8 @@ public:
 	void Update(const sf::Time deltaTime);
 
 	void Draw(sf::RenderWindow & window);
+
+	void LoadFromFile();
+
 
 };

@@ -8,6 +8,7 @@
 #include "solid_wall.hpp"
 #include "breakable_wall.hpp"
 #include "bomb.hpp"
+#include "end_game_screen.hpp"
 
 Game::Game()
 {
@@ -35,14 +36,25 @@ void Game::Draw()
 	map.Draw(window);
 	player1.Draw(window);
 	player2.Draw(window);
-	
+
+	if (isOver)
+		endGameScreen.Draw(window);
 }
 
 void Game::play()
 {
 	sf::Clock clock;
 	sf::Time time;
-	
+
+	if (!font.loadFromFile("res/fonts/SFPixelate.ttf"))
+	{
+		std::cout << "Load failed! " << std::endl;
+		getchar();
+		return;
+	}
+	else
+		endGameScreen.LoadFont(font);
+
 	////-------------- gracz 1 ---------------------------
 	sf::Texture texture_p1;
 	if (!texture_p1.loadFromFile("res/img/character1.png"))
@@ -63,6 +75,7 @@ void Game::play()
 
 	player1.LoadTexture(texture_p1);
 	player2.LoadTexture(texture_p2);
+	map.LoadFromFile();
 	map.LoadTiles();
 
 	while (window.isOpen())
@@ -72,16 +85,45 @@ void Game::play()
 		{
 			if (event.type == sf::Event::Closed || event.key.code == sf::Keyboard::Escape)
 				window.close();
+			if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape && isOver)
+			{
+				if (player2.IsKilled())
+				{
+					player1.SaveToFile(true);
+					player2.SaveToFile(false);
+				}
+				else
+				{
+					player2.SaveToFile(true);
+					player1.SaveToFile(false);
+				}
+				
+				window.close();
+			}
 		}
 
 		window.clear(sf::Color::Black);
 		time = clock.restart();
 
-		player1.MoveWSAD(time, map);
-		player2.MoveArrows(time, map);
 
+		if (!isOver)
+		{
+			player1.MoveWSAD(time, map);
+			player2.MoveArrows(time, map);
+
+			if (player1.IsKilled())
+			{
+				isOver = true;
+				endGameScreen.DisplayPlayer2Win();
+			}
+			else if (player2.IsKilled())
+			{
+				isOver = true;
+				endGameScreen.DisplayPlayer1Win();
+			}
+
+		}
 		Update(time);
-
 		Draw();
 
 		window.display();

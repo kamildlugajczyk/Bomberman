@@ -7,20 +7,13 @@
 
 class Explosion : public Block
 {
+	sf::Texture explosionTexture;
 	float flameTime;
 
-	//bool isDestroyed = false;
-
 public:
-	sf::Texture explosionTexture;
 
 	Explosion();
 
 	void Update(const sf::Time deltaTime) override;
-
-	/*bool exploded = false;
-
-	bool IsExploded() { return exploded; };
-
-	void Explode() { exploded = true; };*/
+	virtual void SetUp() override;
 };

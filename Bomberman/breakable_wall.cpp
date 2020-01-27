@@ -11,3 +11,8 @@ BreakableWall::BreakableWall()
 		getchar();
 	}
 }
+
+void BreakableWall::SetUp()
+{
+	LoadTexture(breakable_wall);
+}

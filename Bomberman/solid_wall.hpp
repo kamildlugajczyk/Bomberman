@@ -7,11 +7,11 @@
 
 class SolidWall : public Wall
 {
-	//int type = solidBlock;
+	int type = solidBlock;
+	sf::Texture solid_texture;
 public:
 
-
-	sf::Texture solid_texture;
-
 	SolidWall();
+
+	virtual void SetUp() override;
 };
