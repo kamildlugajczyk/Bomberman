@@ -23,9 +23,35 @@ void Map::LoadFromFile()
 	}
 }
 
+//void Map::FreeMemory()
+//{
+//	for (int w = 0; w < 11; w++)
+//	{
+//		for (int k = 0; k < 15; k++)
+//		{
+//			delete blocks[w][k];
+//		}
+//		//delete[] blocks[w];
+//	}
+//	//delete[] blocks;
+//}
+
 
 
 Map::Map() : tileSize(64) {};
+
+Map::~Map()
+{
+	for (int w = 0; w < 11; w++)
+	{
+		for (int k = 0; k < 15; k++)
+		{
+			delete blocks[w][k];
+			blocks[w][k] = nullptr;
+		}
+	}
+}
+
 
 void Map::LoadTiles()
 {

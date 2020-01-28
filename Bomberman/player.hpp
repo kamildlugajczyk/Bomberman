@@ -18,6 +18,7 @@ class Player : public GraphicObject
 	float timeSinceBomb, bombCooldown;
 
 public:
+	sf::Texture texture_p1, texture_p2;
 	int bombPlaced;
 
 	Player(std::string name);

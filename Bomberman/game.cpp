@@ -56,16 +56,14 @@ void Game::play()
 		endGameScreen.LoadFont(font);
 
 	////-------------- gracz 1 ---------------------------
-	sf::Texture texture_p1;
-	if (!texture_p1.loadFromFile("res/img/character1.png"))
+	if (!player1.texture_p1.loadFromFile("res/img/character1.png"))
 	{
 		std::cout << "Load failed! " << std::endl;
 		getchar();
 		return;
 	}
 	//-------------- gracz 2 ---------------------------
-	sf::Texture texture_p2;
-	if (!texture_p2.loadFromFile("res/img/character2.png"))
+	if (!player2.texture_p2.loadFromFile("res/img/character2.png"))
 	{
 		std::cout << "Load failed! " << std::endl;
 		getchar();
@@ -73,8 +71,8 @@ void Game::play()
 	}
 	//--------------------------------------------------
 
-	player1.LoadTexture(texture_p1);
-	player2.LoadTexture(texture_p2);
+	player1.LoadTexture(player1.texture_p1);
+	player2.LoadTexture(player2.texture_p2);
 	map.LoadFromFile();
 	map.LoadTiles();
 
@@ -123,9 +121,10 @@ void Game::play()
 			}
 
 		}
-		Update(time);
-		Draw();
 
+		Update(time);
+
+		Draw();
 		window.display();
 
 	}

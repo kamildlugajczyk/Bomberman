@@ -54,7 +54,8 @@ void Player::MoveWSAD(const sf::Time & deltaTime, Map & map)
 		bombLocation.y = ((int)bombLocation.y / 64) * 64;									// w kratce a nie np w polowie
 
 		bomb->SetPosition(bombLocation);
-
+		
+		delete map.blocks[(int)(this->position.y) / 64][(int)(this->position.x) / 64];
 		map.blocks[(int)(this->position.y) / 64][(int)(this->position.x) / 64] = bomb;
 		map.blocks[(int)(this->position.y) / 64][(int)(this->position.x) / 64]->type = bombBlock;
 	}
@@ -92,7 +93,9 @@ void Player::MoveArrows(const sf::Time & deltaTime, Map & map)
 
 		bomb->SetPosition(bombLocation);
 
+		delete map.blocks[(int)(this->position.y) / 64][(int)(this->position.x) / 64];
 		map.blocks[(int)(this->position.y) / 64][(int)(this->position.x) / 64] = bomb;
+		map.blocks[(int)(this->position.y) / 64][(int)(this->position.x) / 64]->type = bombBlock;
 	}
 }
 
@@ -259,6 +262,7 @@ void Player::SaveToFile(bool param)
 	
 
 }
+
 
 
 
