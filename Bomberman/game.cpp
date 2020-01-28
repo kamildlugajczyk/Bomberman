@@ -41,7 +41,7 @@ void Game::Draw()
 		endGameScreen.Draw(window);
 }
 
-void Game::play()
+void Game::Play()
 {
 	sf::Clock clock;
 	sf::Time time;

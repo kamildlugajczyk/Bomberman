@@ -4,13 +4,13 @@
 #include "bomb.hpp"
 #include "explosion.hpp"
 
-Bomb::Bomb() : explodeTime(3.f)
+Bomb::Bomb() : explodeTime(3.f), type(bombBlock)
 {
-	if (!bombTexture.loadFromFile("res/img/bomb.png"))
+	/*if (!bombTexture.loadFromFile("res/img/bomb.png"))
 	{
 		std::cout << "Load failed! " << std::endl;
 		getchar();
-	}
+	}*/
 
 	sprite.setOrigin(-10, -10);
 }
@@ -26,6 +26,11 @@ void Bomb::Update(const sf::Time deltaTime)
 
 void Bomb::SetUp()
 {
+	if (!bombTexture.loadFromFile("res/img/bomb.png"))
+	{
+		std::cout << "Load failed! " << std::endl;
+		getchar();
+	}
 	LoadTexture(bombTexture);
 }
 

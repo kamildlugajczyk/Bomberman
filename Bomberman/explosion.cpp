@@ -5,11 +5,11 @@
 
 Explosion::Explosion() : flameTime(1.f)
 {
-	if (!explosionTexture.loadFromFile("res/img/flame.png"))
+	/*if (!explosionTexture.loadFromFile("res/img/flame.png"))
 	{
 		std::cout << "Load failed! " << std::endl;
 		getchar();
-	}
+	}*/
 
 	collisionBox.top = this->GetPosition().y;
 	collisionBox.left = this->GetPosition().x;
@@ -30,5 +30,11 @@ void Explosion::Update(const sf::Time deltaTime)
 
 void Explosion::SetUp()
 {
+	if (!explosionTexture.loadFromFile("res/img/flame.png"))
+	{
+		std::cout << "Load failed! " << std::endl;
+		getchar();
+	}
+
 	LoadTexture(explosionTexture);
 }

@@ -45,7 +45,7 @@ void Player::MoveWSAD(const sf::Time & deltaTime, Map & map)
 	{
 		timeSinceBomb = bombCooldown;
 
-		Bomb * bomb = new Bomb();
+		Bomb * bomb = new Bomb{};
 		bomb->SetUp();
 		this->bombPlaced++;
 
@@ -83,7 +83,7 @@ void Player::MoveArrows(const sf::Time & deltaTime, Map & map)
 	{
 		timeSinceBomb = bombCooldown;
 
-		Bomb * bomb = new Bomb();
+		Bomb * bomb = new Bomb{};
 		bomb->SetUp();
 		this->bombPlaced++;
 
@@ -134,14 +134,6 @@ void Player::GoRight(const sf::Time & deltaTime, Map & map)
 		position.x += int(velocity.x * deltaTime.asSeconds());
 		playerState = movingRight;
 	}
-}
-
-void Player::ForbidMove()
-{
-	canGoDown = false;
-	canGoUp = false;
-	canGoLeft = false;
-	canGoRight = false;
 }
 
 void Player::Update(const sf::Time deltaTime)
@@ -253,16 +245,10 @@ void Player::SaveToFile(bool param)
 	if (param)
 	{
 		outputFile << "\n " << timeinfo.tm_mday << '.' << (timeinfo.tm_mon + 1) << '.' << (timeinfo.tm_year + 1900) << "\t\t"
-			 << timeinfo.tm_hour << ":" << timeinfo.tm_min << ":" << timeinfo.tm_sec << "\n";
+			<< timeinfo.tm_hour << ":" << timeinfo.tm_min << ":" << timeinfo.tm_sec << "\n";
 
 		outputFile << "\t" << this->name << " wins!\n";
 	}
 
 	outputFile << "\t -" << this->name << " planted " << this->bombPlaced << " bomb(s)\n";
-	
-
 }
-
-
-
-

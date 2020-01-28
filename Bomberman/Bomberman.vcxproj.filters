@@ -27,9 +27,6 @@
     <ClCompile Include="block.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="power_up.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="bomb.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -69,9 +66,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="block.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="power_up.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="bomb.hpp">

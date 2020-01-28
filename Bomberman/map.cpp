@@ -9,35 +9,6 @@
 #include "bomb.hpp"
 #include "explosion.hpp"
 
-
-void Map::LoadFromFile()
-{
-	std::ifstream inputFile("res/map/map.txt");
-	if (inputFile.is_open())
-	{
-		for (int w = 0; w < 11; w++)
-			for (int k = 0; k < 15; k++)
-			{
-				inputFile >> gameMap[w][k];
-			}
-	}
-}
-
-//void Map::FreeMemory()
-//{
-//	for (int w = 0; w < 11; w++)
-//	{
-//		for (int k = 0; k < 15; k++)
-//		{
-//			delete blocks[w][k];
-//		}
-//		//delete[] blocks[w];
-//	}
-//	//delete[] blocks;
-//}
-
-
-
 Map::Map() : tileSize(64) {};
 
 Map::~Map()
@@ -61,25 +32,25 @@ void Map::LoadTiles()
 		{
 			if (gameMap[w][k] == 1)									// 0 nic , 1 do zniszczenia, 2 nie do zniszczenia
 			{
-				Block * breakable = new BreakableWall;
+				Block * breakable = new BreakableWall{};
 				blocks[w][k] = breakable;
-				blocks[w][k]->SetPosition(sf::Vector2f(k * 64, w * 64));
+				blocks[w][k]->SetPosition(sf::Vector2f(k * tileSize, w * tileSize));
 				blocks[w][k]->SetUp();
 				blocks[w][k]->type = breakableBlock;
 			}
 			else if (gameMap[w][k] == 2)
 			{
-				Block * solid = new SolidWall;
+				Block * solid = new SolidWall{};
 				blocks[w][k] = solid;
-				blocks[w][k]->SetPosition(sf::Vector2f(k * 64, w * 64));
+				blocks[w][k]->SetPosition(sf::Vector2f(k * tileSize, w * tileSize));
 				blocks[w][k]->SetUp();
 				blocks[w][k]->type = solidBlock;
 			}
 			else if (gameMap[w][k] == 0)
 			{
-				Block * background = new Background;
+				Block * background = new Background{};
 				blocks[w][k] = background;
-				blocks[w][k]->SetPosition(sf::Vector2f(k * 64, w * 64));
+				blocks[w][k]->SetPosition(sf::Vector2f(k * tileSize, w * tileSize));
 				blocks[w][k]->SetUp();
 				blocks[w][k]->type = backgroundBlock;
 			}
@@ -98,9 +69,9 @@ void Map::Update(const sf::Time deltaTime)
 			{
 				delete blocks[w][k];													// usuwam bombe
 
-				Block * explosion1 = new Explosion();							
+				Block * explosion1 = new Explosion{};
 				blocks[w][k] = explosion1;												
-				blocks[w][k]->SetPosition(sf::Vector2f(k * 64, w * 64));	
+				blocks[w][k]->SetPosition(sf::Vector2f(k * tileSize, w * tileSize));
 				blocks[w][k]->SetUp();
 				blocks[w][k]->type = explosionBlock;
 
@@ -108,9 +79,9 @@ void Map::Update(const sf::Time deltaTime)
 				{
 					delete blocks[w - 1][k];
 
-					Block * explosion4 = new Explosion();
+					Block * explosion4 = new Explosion{};
 					blocks[w - 1][k] = explosion4;											
-					blocks[w - 1][k]->SetPosition(sf::Vector2f(k * 64, (w - 1) * 64));	
+					blocks[w - 1][k]->SetPosition(sf::Vector2f(k * tileSize, (w - 1) * tileSize));
 					blocks[w - 1][k]->SetUp();
 					blocks[w - 1][k]->type = explosionBlock;
 				}
@@ -118,9 +89,9 @@ void Map::Update(const sf::Time deltaTime)
 				{
 					delete blocks[w + 1][k];
 
-					Block * explosion5 = new Explosion();
+					Block * explosion5 = new Explosion{};
 					blocks[w + 1][k] = explosion5;												
-					blocks[w + 1][k]->SetPosition(sf::Vector2f(k * 64, (w + 1) * 64));		
+					blocks[w + 1][k]->SetPosition(sf::Vector2f(k * tileSize, (w + 1) * tileSize));
 					blocks[w + 1][k]->SetUp();
 					blocks[w + 1][k]->type = explosionBlock;
 				}
@@ -128,9 +99,9 @@ void Map::Update(const sf::Time deltaTime)
 				{
 					delete blocks[w][k - 1];
 
-					Block * explosion2 = new Explosion();
+					Block * explosion2 = new Explosion{};
 					blocks[w][k - 1] = explosion2;											
-					blocks[w][k - 1]->SetPosition(sf::Vector2f((k - 1) * 64, w * 64));	
+					blocks[w][k - 1]->SetPosition(sf::Vector2f((k - 1) * tileSize, w * tileSize));
 					blocks[w][k - 1]->SetUp();
 					blocks[w][k - 1]->type = explosionBlock;
 				}
@@ -138,9 +109,9 @@ void Map::Update(const sf::Time deltaTime)
 				{
 					delete blocks[w][k + 1];
 
-					Block * explosion3 = new Explosion();
+					Block * explosion3 = new Explosion{};
 					blocks[w][k + 1] = explosion3;												
-					blocks[w][k + 1]->SetPosition(sf::Vector2f((k + 1) * 64, w * 64));		
+					blocks[w][k + 1]->SetPosition(sf::Vector2f((k + 1) * tileSize, w * tileSize));
 					blocks[w][k + 1]->SetUp();
 					blocks[w][k + 1]->type = explosionBlock;
 				}
@@ -150,9 +121,9 @@ void Map::Update(const sf::Time deltaTime)
 			{
 				delete blocks[w][k];
 
-				Background * background = new Background;								// w tym miejscu tworze blok tla
+				Background * background = new Background{};								// w tym miejscu tworze blok tla
 				blocks[w][k] = background;												// .
-				blocks[w][k]->SetPosition(sf::Vector2f(k * 64, w * 64));				// .
+				blocks[w][k]->SetPosition(sf::Vector2f(k * tileSize, w * tileSize));				// .
 				blocks[w][k]->SetUp();
 				blocks[w][k]->type = backgroundBlock;
 			}
@@ -164,4 +135,17 @@ void Map::Draw(sf::RenderWindow & window)
 	for (int w = 0; w < 11; w++)			
 		for (int k = 0; k < 15; k++)
 			blocks[w][k]->Draw(window);
+}
+
+void Map::LoadFromFile()
+{
+	std::ifstream inputFile("res/map/map.txt");
+	if (inputFile.is_open())
+	{
+		for (int w = 0; w < 11; w++)
+			for (int k = 0; k < 15; k++)
+			{
+				inputFile >> gameMap[w][k];
+			}
+	}
 }

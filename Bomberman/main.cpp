@@ -2,12 +2,11 @@
 #include <SFML/Graphics.hpp>
 
 #include "game.hpp"
-#include "vld.h"
 
 int main()
 {
 	Game newGame{};
-	newGame.play();
+	newGame.Play();
 
 	return 0;
 }

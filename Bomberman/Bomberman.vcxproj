@@ -134,7 +134,6 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="map.cpp" />
     <ClCompile Include="player.cpp" />
-    <ClCompile Include="power_up.cpp" />
     <ClCompile Include="solid_wall.cpp" />
     <ClCompile Include="wall.cpp" />
   </ItemGroup>
@@ -150,7 +149,6 @@
     <ClInclude Include="graphic_object.hpp" />
     <ClInclude Include="map.hpp" />
     <ClInclude Include="player.hpp" />
-    <ClInclude Include="power_up.hpp" />
     <ClInclude Include="solid_wall.hpp" />
     <ClInclude Include="wall.hpp" />
   </ItemGroup>

@@ -8,10 +8,12 @@
 
 class BreakableWall : public Wall
 {
-	sf::Texture breakable_wall;
+	int type;										// zmienna informujaca o typie bloku
+	sf::Texture breakable_wall;						// tesktura zniszczalnej sciany
 public:
-
+	/* Konstruktor bezargumentowy ustawiajacy typ bloku */
 	BreakableWall();
 
+	/* Metoda wczytujaca odpowiednia teksture zniszczalnej sciany */
 	virtual void SetUp() override;
 };

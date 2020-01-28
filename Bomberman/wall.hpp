@@ -7,8 +7,8 @@
 
 class Wall : public Block
 {
-	bool healthPoint;
-
 public:
-	//void Update(const sf::Time deltaTime);
+	/* Metoda wyswitlajaca komunikat o strowrzeniu
+	nieprawidlowego wskaznika */
+	virtual void SetUp() override;
 };
