@@ -17,6 +17,7 @@ class Game
 	EndGameScreen endGameScreen;									// widok konca gry
 	sf::Font font;													// czcionka
 	bool isOver;													// zmienna informujaca czy gra sie skonczyla
+	bool once = true;												// zmienna pomocniczna
 
 public:
 	/* Konstruktor bezargumentowy ustawiajacy szerokosc i wysokosc okna gry,
@@ -37,4 +38,10 @@ public:
 	/* Glowna metoda zawieraja cala logike gry w ktorej wywolywane
 	sa kolejne metody, zawiera glowna petle gry */
 	void Play();
+
+	/* Metoda przywracajaca stan gry do warunkow poczatkowych
+	(pozycje obu graczy, ponowne wczytanie planszy, wyzerowanie
+	licznika podstawionych bomb oraz ustawienie atrybutu killed
+	obu graczy na false */
+	void PlayAgain();
 };

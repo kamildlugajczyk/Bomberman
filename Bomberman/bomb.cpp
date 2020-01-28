@@ -6,12 +6,6 @@
 
 Bomb::Bomb() : explodeTime(3.f), type(bombBlock)
 {
-	/*if (!bombTexture.loadFromFile("res/img/bomb.png"))
-	{
-		std::cout << "Load failed! " << std::endl;
-		getchar();
-	}*/
-
 	sprite.setOrigin(-10, -10);
 }
 

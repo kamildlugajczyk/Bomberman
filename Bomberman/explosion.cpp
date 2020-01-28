@@ -5,12 +5,6 @@
 
 Explosion::Explosion() : flameTime(1.f)
 {
-	/*if (!explosionTexture.loadFromFile("res/img/flame.png"))
-	{
-		std::cout << "Load failed! " << std::endl;
-		getchar();
-	}*/
-
 	collisionBox.top = this->GetPosition().y;
 	collisionBox.left = this->GetPosition().x;
 	collisionBox.width = 64;

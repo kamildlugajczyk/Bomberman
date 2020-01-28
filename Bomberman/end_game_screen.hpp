@@ -6,7 +6,8 @@
 class EndGameScreen
 {
 	sf::Text mainText;									// tekst glowny wyswietlany u gory
-	sf::Text subText;									// tekst dodatkowy wyswietlany pod mainText
+	sf::Text subText1;									// pierwszy tekst dodatkowy wyswietlany pod mainText
+	sf::Text subText2;									// drugi tekst dodatkowy wyswietlany pod mainText
 
 public:
 
@@ -14,11 +15,9 @@ public:
 	@param window okno gry */
 	void Draw(sf::RenderWindow & window);
 
-	/* Metoda wywietlajaca informacje o wygranej gracza 1 */
-	void DisplayPlayer1Win();
-
-	/* Metoda wywietlajaca informacje o wygranej gracza 2 */
-	void DisplayPlayer2Win();
+	/* Metoda wywietlajaca informacje o wygranej ktoregos z graczy
+	@param player1win true gdy wygral gracz 1, false gdy wygral gracz 2*/
+	void DisplayPlayer1Win(bool player1win);
 
 	/* Metoda wczytujaca czcionke podana w parametrze
 	@param font wybrana czcionka */

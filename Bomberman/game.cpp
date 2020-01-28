@@ -83,20 +83,26 @@ void Game::Play()
 		{
 			if (event.type == sf::Event::Closed || event.key.code == sf::Keyboard::Escape)
 				window.close();
-			if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape && isOver)
+
+			if (isOver)
 			{
-				if (player2.IsKilled())
+				if (player2.IsKilled() && once)
 				{
 					player1.SaveToFile(true);
 					player2.SaveToFile(false);
 				}
-				else
+				else if (player1.IsKilled() && once)
 				{
 					player2.SaveToFile(true);
 					player1.SaveToFile(false);
 				}
-				
-				window.close();
+
+				once = false;
+
+				if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::R)
+					PlayAgain();
+				else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
+					window.close();
 			}
 		}
 
@@ -112,14 +118,13 @@ void Game::Play()
 			if (player1.IsKilled())
 			{
 				isOver = true;
-				endGameScreen.DisplayPlayer2Win();
+				endGameScreen.DisplayPlayer1Win(false);
 			}
 			else if (player2.IsKilled())
 			{
 				isOver = true;
-				endGameScreen.DisplayPlayer1Win();
+				endGameScreen.DisplayPlayer1Win(true);
 			}
-
 		}
 
 		Update(time);
@@ -128,4 +133,23 @@ void Game::Play()
 		window.display();
 
 	}
+}
+
+void Game::PlayAgain()
+{
+	isOver = false;
+
+	map.LoadFromFile();
+	map.LoadTiles();
+
+	player1.SetPosition(sf::Vector2f(96, 96));
+	player2.SetPosition(sf::Vector2f(864, 604));
+
+	player1.killed = false;
+	player2.killed = false;
+
+	player1.bombPlaced = 0;
+	player2.bombPlaced = 0;
+
+	once = true;
 }
